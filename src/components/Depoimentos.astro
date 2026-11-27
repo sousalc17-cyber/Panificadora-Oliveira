@@ -1,31 +1,70 @@
 ---
 /**
- * Prova social.
+ * Prova social em carrossel.
  *
- * A nota e o número de avaliações são os que já existiam no material verificado
- * (Google 4,5 ★ / 50 avaliações). Citações só aparecem quando `site.avaliacoes`
- * for preenchido com texto real e autorizado — o campo é uma lista de
- * `{ autor: string, texto: string }` e fica vazio até a padaria enviar as suas.
+ * A nota e o total de avaliações são os dados verificados do perfil no Google
+ * (4,5 ★ / 50 avaliações). Os cartões de citação só aparecem quando
+ * `site.avaliacoes` for preenchido com texto real e autorizado — a lista aceita
+ * `{ autor: string, texto: string }[]` e fica vazia até a padaria enviar as suas,
+ * porque não se inventa depoimento.
  *
- * Reaproveita `google.url` para o link "Ver no Google"; enquanto o endereço do
- * perfil não for confirmado, o link não é renderizado (nada de URL inventada).
+ * Enquanto a lista estiver vazia, a seção mostra cartões em branco: o formato
+ * final do carrossel, com o mesmo tamanho e espaçamento, sem texto de avaliação.
+ * Eles são decorativos (`aria-hidden`) e o aviso em texto explica o espaço.
+ *
+ * O gráfico de distribuição por nota lê `google.distribuicao` (percentual de
+ * 5 a 1 estrela). Enquanto `distribuicaoConfirmada` for `false`, os percentuais
+ * são ilustrativos — vieram da referência visual enviada — e o aviso da seção
+ * diz isso em texto.
+ *
+ * O carrossel é rolagem nativa com scroll-snap: funciona no teclado e no toque
+ * sem JavaScript. Os botões de avançar/voltar só existem depois que o script
+ * confirma que há conteúdo fora da tela.
  */
 import site from '../content/site.json';
 
 const { google } = site;
 const avaliacoes = site.avaliacoes as { autor: string; texto: string }[];
+const notas = [5, 4, 3, 2, 1];
+const distribuicao = google.distribuicao as Record<string, number>;
+const percentual = (nota: number) => Math.min(100, Math.max(0, distribuicao[String(nota)] ?? 0));
+const distribuicaoResumo = notas
+  .map((nota) => `${nota} ${nota === 1 ? 'estrela' : 'estrelas'}: ${percentual(nota)}%`)
+  .join('; ');
 ---
 
 {
   google.nota && (
     <section class="avaliacoes" id="avaliacoes" aria-labelledby="avaliacoes-titulo">
       <div class="container avaliacoes__interno">
-        <p class="avaliacoes__nota">
-          {google.nota}
-          <span class="avaliacoes__estrela" aria-hidden="true">
-            ★
-          </span>
-        </p>
+        <div class="avaliacoes__placar">
+          <p class="avaliacoes__nota">
+            {google.nota}
+            <span class="avaliacoes__estrela" aria-hidden="true">
+              ★
+            </span>
+          </p>
+
+          <div
+            class="avaliacoes__distribuicao"
+            role="img"
+            aria-label={`Distribuição das avaliações por nota — ${distribuicaoResumo}`}
+          >
+            {
+              notas.map((nota) => (
+                <div class="avaliacoes__nota-linha" aria-hidden="true">
+                  <span class="avaliacoes__nota-valor">{nota}</span>
+                  <span class="avaliacoes__nota-trilho">
+                    <span
+                      class="avaliacoes__nota-barra"
+                      style={`width: ${percentual(nota)}%`}
+                    />
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
 
         <div class="avaliacoes__conteudo">
           <p class="eyebrow">No Google</p>
@@ -33,36 +72,138 @@ const avaliacoes = site.avaliacoes as { autor: string; texto: string }[];
             {google.avaliacoes} avaliações de quem passa por aqui
           </h2>
 
-          {avaliacoes.length > 0 ? (
-            <ul class="avaliacoes__lista">
-              {avaliacoes.map((item) => (
-                <li class="avaliacoes__item">
-                  <blockquote class="avaliacoes__citacao">
-                    <p>“{item.texto}”</p>
-                    <cite>{item.autor}</cite>
-                  </blockquote>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p class="avaliacoes__texto">
-              A nota é do perfil da padaria no Google, com o total de avaliações de lá.
-              {google.url && (
-                <>
-                  {' '}
-                  <a class="avaliacoes__link" href={google.url} target="_blank" rel="noopener noreferrer">
-                    Ver no Google
-                    <span class="sr-only"> (abre em nova aba)</span>
-                  </a>
-                </>
+          <div class="avaliacoes__carrossel" data-carrossel-secao>
+            <ul
+              class="avaliacoes__trilho"
+              data-carrossel
+              tabindex="0"
+              aria-label="Avaliações do perfil da padaria no Google"
+            >
+              {avaliacoes.length > 0 ? (
+                avaliacoes.map((item) => (
+                  <li class="avaliacoes__cartao">
+                    <blockquote class="avaliacoes__citacao">
+                      <p>{item.texto}</p>
+                    </blockquote>
+                    <cite class="avaliacoes__autor">{item.autor}</cite>
+                  </li>
+                ))
+              ) : (
+                Array.from({ length: 4 }).map(() => (
+                  <li class="avaliacoes__cartao avaliacoes__cartao--vazio" aria-hidden="true">
+                    <span class="avaliacoes__marca" aria-hidden="true">
+                      “
+                    </span>
+                    <span class="avaliacoes__esqueleto avaliacoes__esqueleto--1" />
+                    <span class="avaliacoes__esqueleto avaliacoes__esqueleto--2" />
+                    <span class="avaliacoes__esqueleto avaliacoes__esqueleto--3" />
+                    <span class="avaliacoes__rodape-esqueleto">
+                      <span class="avaliacoes__avatar" />
+                      <span class="avaliacoes__esqueleto avaliacoes__esqueleto--autor" />
+                    </span>
+                  </li>
+                ))
               )}
-            </p>
-          )}
+            </ul>
+
+            {
+              avaliacoes.length === 0 && (
+                <p class="avaliacoes__aviso">
+                  Espaço das avaliações do Google: os cartões em branco mostram o formato
+                  final. As citações entram aqui quando a padaria autorizar a publicação, e os
+                  percentuais do gráfico quando tivermos a distribuição do perfil no Google.
+                  {google.url && (
+                    <>
+                      {' '}
+                      <a
+                        class="avaliacoes__link"
+                        href={google.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Ver no Google
+                        <span class="sr-only"> (abre em nova aba)</span>
+                      </a>
+                    </>
+                  )}
+                </p>
+              )
+            }
+
+            <div class="avaliacoes__controles" data-carrossel-controles hidden>
+              <button
+                type="button"
+                class="avaliacoes__controle"
+                data-carrossel-anterior
+                aria-label="Avaliação anterior"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                class="avaliacoes__controle"
+                data-carrossel-proximo
+                aria-label="Próxima avaliação"
+              >
+                →
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   )
 }
+
+<script is:inline>
+  (() => {
+    const trilhos = document.querySelectorAll('[data-carrossel]');
+    if (!trilhos.length) return;
+
+    trilhos.forEach((trilho) => {
+      const secao = trilho.closest('[data-carrossel-secao]');
+      if (!(secao instanceof HTMLElement)) return;
+
+      const anterior = secao.querySelector('[data-carrossel-anterior]');
+      const proximo = secao.querySelector('[data-carrossel-proximo]');
+      const controles = secao.querySelector('[data-carrossel-controles]');
+      if (!(anterior instanceof HTMLButtonElement) || !(proximo instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      const semMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const passo = () => {
+        const cartao = trilho.querySelector('.avaliacoes__cartao');
+        const vao = parseFloat(getComputedStyle(trilho).columnGap) || 0;
+        return cartao ? cartao.getBoundingClientRect().width + vao : trilho.clientWidth;
+      };
+
+      const atualizar = () => {
+        const limite = trilho.scrollWidth - trilho.clientWidth - 1;
+        anterior.disabled = trilho.scrollLeft <= 0;
+        proximo.disabled = trilho.scrollLeft >= limite;
+        if (controles instanceof HTMLElement) {
+          controles.hidden = trilho.scrollWidth <= trilho.clientWidth + 1;
+        }
+      };
+
+      const rolar = (direcao) => {
+        trilho.scrollBy({
+          left: direcao * passo(),
+          behavior: semMovimento ? 'auto' : 'smooth',
+        });
+      };
+
+      anterior.addEventListener('click', () => rolar(-1));
+      proximo.addEventListener('click', () => rolar(1));
+      trilho.addEventListener('scroll', atualizar, { passive: true });
+      window.addEventListener('resize', atualizar);
+
+      atualizar();
+    });
+  })();
+</script>
 
 <style>
   .avaliacoes {
@@ -74,7 +215,57 @@ const avaliacoes = site.avaliacoes as { autor: string; texto: string }[];
 
   .avaliacoes__interno {
     display: grid;
+    /* minmax(0, …) impede a coluna de crescer com o conteúdo do carrossel. */
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--e5);
+  }
+
+  .avaliacoes__placar {
+    display: grid;
+    min-width: 0;
+    gap: var(--e4);
+  }
+
+  .avaliacoes__conteudo,
+  .avaliacoes__carrossel {
+    min-width: 0;
+  }
+
+  .avaliacoes__distribuicao {
+    display: grid;
+    gap: 6px;
+    max-width: 280px;
+  }
+
+  .avaliacoes__nota-linha {
+    display: flex;
+    align-items: center;
+    gap: var(--e2);
+  }
+
+  .avaliacoes__nota-valor {
+    width: 10px;
+    font-family: var(--fonte-texto);
+    font-size: var(--t-xs);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--tinta-suave);
+  }
+
+  .avaliacoes__nota-trilho {
+    flex: 1;
+    height: 9px;
+    border-radius: var(--r-pill);
+    background-color: var(--pedra);
+    overflow: hidden;
+  }
+
+  .avaliacoes__nota-barra {
+    display: block;
+    height: 100%;
+    min-width: 5px;
+    border-radius: var(--r-pill);
+    background-color: var(--acafrao);
   }
 
   .avaliacoes__nota {
@@ -82,10 +273,10 @@ const avaliacoes = site.avaliacoes as { autor: string; texto: string }[];
     align-items: baseline;
     gap: var(--e1);
     font-family: var(--fonte-display);
-    font-size: clamp(3rem, 2rem + 4vw, 4.5rem);
+    font-size: clamp(1.875rem, 1.4rem + 1.6vw, 2.5rem);
     font-weight: 700;
     line-height: 1;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     color: var(--crosta);
   }
 
@@ -99,28 +290,96 @@ const avaliacoes = site.avaliacoes as { autor: string; texto: string }[];
     font-size: var(--t-h3);
   }
 
-  .avaliacoes__texto {
+  .avaliacoes__carrossel {
+    margin-top: var(--e5);
+  }
+
+  .avaliacoes__trilho {
+    display: flex;
+    gap: var(--e4);
+    margin: 0;
+    max-width: 100%;
+    padding: 0 0 var(--e2);
+    list-style: none;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+  }
+
+  .avaliacoes__trilho:focus-visible {
+    outline: 2px solid var(--crosta);
+    outline-offset: 4px;
+  }
+
+  .avaliacoes__cartao {
+    display: flex;
+    flex: 0 0 min(86%, 30rem);
+    flex-direction: column;
+    gap: var(--e3);
+    padding: var(--e5);
+    background-color: var(--miolo);
+    border: 1px solid var(--borda);
+    border-radius: var(--r2);
+    box-shadow: var(--sombra);
+    scroll-snap-align: start;
+  }
+
+  .avaliacoes__cartao--vazio {
+    min-height: 15rem;
+  }
+
+  .avaliacoes__marca {
+    font-family: var(--fonte-display);
+    font-size: 2.5rem;
+    line-height: 0.55;
+    color: var(--borda-forte);
+  }
+
+  .avaliacoes__esqueleto {
+    display: block;
+    height: 0.75rem;
+    border-radius: var(--r-pill);
+    background-color: var(--pedra);
+  }
+
+  .avaliacoes__esqueleto--1 {
+    width: 100%;
+  }
+
+  .avaliacoes__esqueleto--2 {
+    width: 86%;
+  }
+
+  .avaliacoes__esqueleto--3 {
+    width: 54%;
+  }
+
+  .avaliacoes__rodape-esqueleto {
+    display: flex;
+    align-items: center;
+    gap: var(--e2);
+    margin-top: auto;
+    padding-top: var(--e3);
+  }
+
+  .avaliacoes__avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: var(--r-pill);
+    background-color: var(--pedra);
+  }
+
+  .avaliacoes__esqueleto--autor {
+    width: 7rem;
+  }
+
+  .avaliacoes__aviso {
     margin-top: var(--e3);
     max-width: var(--medida);
-    font-size: var(--t-sm);
-    line-height: var(--lh-sm);
+    font-size: var(--t-xs);
+    line-height: 1.6;
     color: var(--tinta-suave);
-  }
-
-  .avaliacoes__link {
-    color: var(--crosta);
-    text-underline-offset: 4px;
-  }
-
-  .avaliacoes__lista {
-    display: grid;
-    gap: var(--e4);
-    margin-top: var(--e4);
-  }
-
-  .avaliacoes__item {
-    padding-top: var(--e4);
-    border-top: 1px solid var(--borda);
   }
 
   .avaliacoes__citacao p {
@@ -129,13 +388,53 @@ const avaliacoes = site.avaliacoes as { autor: string; texto: string }[];
     line-height: 1.4;
   }
 
-  .avaliacoes__citacao cite {
-    display: block;
-    margin-top: var(--e2);
+  .avaliacoes__autor {
+    margin-top: auto;
     font-family: var(--fonte-texto);
     font-size: var(--t-xs);
     font-style: normal;
     color: var(--tinta-suave);
+  }
+
+  .avaliacoes__link {
+    color: var(--crosta);
+    font-size: var(--t-sm);
+    text-underline-offset: 4px;
+  }
+
+  .avaliacoes__controles {
+    display: flex;
+    gap: var(--e2);
+    margin-top: var(--e3);
+  }
+
+  .avaliacoes__controles[hidden] {
+    display: none;
+  }
+
+  .avaliacoes__controle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--borda-forte);
+    border-radius: var(--r-pill);
+    background-color: var(--farinha);
+    color: var(--crosta);
+    font-size: var(--t-base);
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .avaliacoes__controle:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .avaliacoes__controle:focus-visible {
+    outline: 2px solid var(--crosta);
+    outline-offset: 3px;
   }
 
   @media (min-width: 900px) {
@@ -144,14 +443,13 @@ const avaliacoes = site.avaliacoes as { autor: string; texto: string }[];
     }
 
     .avaliacoes__interno {
-      grid-template-columns: 200px minmax(0, 1fr);
+      grid-template-columns: 160px minmax(0, 1fr);
       align-items: start;
       gap: var(--e7);
     }
 
-    .avaliacoes__lista {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: var(--e5) var(--e6);
+    .avaliacoes__cartao {
+      flex-basis: min(46%, 26rem);
     }
   }
 </style>

@@ -36,7 +36,9 @@
   "google": {
     "nota": "4,5",
     "avaliacoes": 50,
-    "url": null
+    "url": null,
+    "distribuicao": { "5": 100, "4": 55, "3": 28, "2": 2, "1": 2 },
+    "distribuicaoConfirmada": false
   },
   "avaliacoes": [],
   "provas": [
