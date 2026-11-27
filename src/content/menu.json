@@ -1,111 +1,190 @@
 {
-  "provisorio": true,
-  "aviso": "Cardápio em atualização",
+  "provisorio": false,
+  "aviso": null,
   "titulo": "O que sai do forno",
-  "lede": "Pães, café da manhã, confeitaria, salgados e conveniência. Os valores são informados no balcão e pelo WhatsApp.",
-  "nota": "[PENDENTE: cardápio oficial por categoria, com nomes exatos e descrições — os itens abaixo vêm do que a padaria publica no Instagram e estão marcados como lista parcial.]",
+  "lede": "Cuscuz, tapiocas, sanduíches, crepiocas, omeletes, sopas, sucos e cafés. Todos os dias, das 6h às 22h30.",
+  "nota": null,
   "rotuloPrecoAusente": "Preço no balcão",
   "categorias": [
     {
-      "id": "paes",
-      "nome": "Pães",
-      "apoio": "A fornada do dia.",
-      "pendente": true,
+      "id": "cuscuz",
+      "nome": "Cuscuz",
+      "apoio": null,
+      "pendente": false,
       "itens": [
+        { "nome": "Cuscuz tradicional", "descricao": null, "preco": "R$ 5,00" },
+        { "nome": "Cuscuz c/ ovo", "descricao": null, "preco": "R$ 8,00" },
+        { "nome": "Cuscuz c/ presunto e queijo", "descricao": null, "preco": "R$ 10,00" },
+        { "nome": "Cuscuz matinal", "descricao": "Presunto, queijo e ovo", "preco": "R$ 12,00" },
+        { "nome": "Cuscuz c/ frango", "descricao": "Frango desfiado", "preco": "R$ 13,00" },
+        { "nome": "Cuscuz encantado", "descricao": "Frango e queijo", "preco": "R$ 14,00" },
+        { "nome": "Cuscuz c/ carne", "descricao": "Carne de sol desfiada", "preco": "R$ 14,00" },
+        { "nome": "Cuscuz c/ calabresa e queijo", "descricao": null, "preco": "R$ 14,00" },
+        { "nome": "Cuscuz tropical", "descricao": "Carne e queijo", "preco": "R$ 15,00" },
+        { "nome": "Cuscuz c/ fígado", "descricao": null, "preco": "R$ 15,00" },
+        { "nome": "Cuscuz c/ carne e ovo", "descricao": null, "preco": "R$ 15,00" },
+        { "nome": "Cuscuz c/ calabresa e ovo", "descricao": null, "preco": "R$ 15,00" },
+        { "nome": "Cuscuz nordestino", "descricao": "Carne em cubos", "preco": "R$ 16,00" },
         {
-          "nome": "Pães da fornada",
+          "nome": "Cuscuz c/ carne de sol e queijo coalho tostado",
           "descricao": null,
-          "preco": null,
-          "pendente": true
+          "preco": "R$ 18,00"
+        },
+        { "nome": "Cuscuz c/ mão de vaca", "descricao": null, "preco": "R$ 20,00" }
+      ]
+    },
+    {
+      "id": "tapiocas",
+      "nome": "Tapiocas",
+      "apoio": null,
+      "pendente": false,
+      "itens": [
+        { "nome": "Tapioca tradicional", "descricao": null, "preco": "R$ 5,00" },
+        { "nome": "Tapioca c/ ovo", "descricao": null, "preco": "R$ 8,00" },
+        { "nome": "Tapioca c/ presunto e queijo", "descricao": null, "preco": "R$ 10,00" },
+        {
+          "nome": "Tapioca c/ frango",
+          "descricao": "Presunto, queijo e ovo",
+          "preco": "R$ 12,00"
+        },
+        { "nome": "Tapioca encantada", "descricao": "Frango e queijo", "preco": "R$ 13,00" },
+        { "nome": "Tapioca c/ carne", "descricao": null, "preco": "R$ 14,00" },
+        { "nome": "Tapioca c/ calabresa e queijo", "descricao": null, "preco": "R$ 14,00" },
+        { "nome": "Tapioca tropical", "descricao": "Carne e queijo", "preco": "R$ 15,00" },
+        { "nome": "Tapioca c/ fígado", "descricao": null, "preco": "R$ 15,00" },
+        { "nome": "Tapioca c/ carne e ovo", "descricao": null, "preco": "R$ 15,00" },
+        { "nome": "Tapioca c/ calabresa e ovo", "descricao": null, "preco": "R$ 15,00" },
+        { "nome": "Tapioca nordestina", "descricao": "Carne em cubos", "preco": "R$ 16,00" },
+        {
+          "nome": "Tapioca c/ carne de sol e queijo coalho tostado",
+          "descricao": null,
+          "preco": "R$ 18,00"
         }
       ]
     },
     {
-      "id": "cafe-da-manha",
-      "nome": "Café da manhã",
-      "apoio": "Servido desde a abertura.",
-      "pendente": true,
+      "id": "sanduiches",
+      "nome": "Sanduíches",
+      "apoio": null,
+      "pendente": false,
       "itens": [
+        { "nome": "Pão na chapa simples", "descricao": null, "preco": "R$ 3,00" },
+        { "nome": "Pão na chapa completo", "descricao": "Pão e ovo", "preco": "R$ 5,00" },
+        { "nome": "Misto simples", "descricao": "Presunto e queijo", "preco": "R$ 7,00" },
+        { "nome": "Pão na chapa c/ queijo e ovo", "descricao": null, "preco": "R$ 7,00" },
         {
-          "nome": "Cuscuz",
-          "descricao": null,
-          "preco": null,
-          "pendente": false
-        }
-      ]
-    },
-    {
-      "id": "confeitaria",
-      "nome": "Confeitaria",
-      "apoio": "Bolos, tortas e doces.",
-      "pendente": true,
-      "itens": [
-        {
-          "nome": "Tortas",
-          "descricao": null,
-          "preco": null,
-          "pendente": false
+          "nome": "Misto completo",
+          "descricao": "Presunto, queijo e ovo",
+          "preco": "R$ 10,00"
         },
         {
-          "nome": "Bolos",
-          "descricao": "Bolos redondos com cobertura.",
-          "preco": null,
-          "pendente": false
+          "nome": "Pão na chapa c/ queijo, presunto e ovo",
+          "descricao": null,
+          "preco": "R$ 10,00"
         },
         {
-          "nome": "Brownie",
+          "nome": "Pão na chapa c/ carne de sol e queijo ou carne moída",
           "descricao": null,
-          "preco": null,
-          "pendente": false
-        }
-      ]
-    },
-    {
-      "id": "salgados",
-      "nome": "Salgados",
-      "apoio": "Para levar ou comer no local.",
-      "pendente": true,
-      "itens": [
-        {
-          "nome": "Salgados",
-          "descricao": null,
-          "preco": null,
-          "pendente": true
-        }
-      ]
-    },
-    {
-      "id": "pratos-do-dia",
-      "nome": "Pratos do dia",
-      "apoio": "Pratos que variam ao longo da semana.",
-      "pendente": true,
-      "itens": [
-        {
-          "nome": "Filé trinchado com fritas",
-          "descricao": null,
-          "preco": null,
-          "pendente": false
+          "preco": "R$ 12,00"
         },
         {
-          "nome": "Hambúrguer em dias temáticos",
+          "nome": "Pão na chapa c/ carne de sol, presunto e queijo",
           "descricao": null,
-          "preco": null,
-          "pendente": false
+          "preco": "R$ 14,00"
         }
       ]
     },
     {
-      "id": "conveniencia",
-      "nome": "Conveniência",
-      "apoio": "Itens de conveniência da loja.",
-      "pendente": true,
+      "id": "crepiocas",
+      "nome": "Crepiocas",
+      "apoio": null,
+      "pendente": false,
       "itens": [
+        { "nome": "Crepioca tradicional", "descricao": null, "preco": "R$ 5,00" },
+        { "nome": "Crepioca c/ ovo cremoso", "descricao": null, "preco": "R$ 8,00" },
+        { "nome": "Crepioca c/ presunto e queijo", "descricao": null, "preco": "R$ 10,00" },
         {
-          "nome": "Itens de conveniência",
+          "nome": "Crepioca c/ frango e requeijão cremoso",
           "descricao": null,
-          "preco": null,
-          "pendente": true
+          "preco": "R$ 14,00"
+        },
+        { "nome": "Crepioca c/ carne de sol e queijo", "descricao": null, "preco": "R$ 15,00" }
+      ]
+    },
+    {
+      "id": "omeletes",
+      "nome": "Omeletes",
+      "apoio": null,
+      "pendente": false,
+      "itens": [
+        { "nome": "Omelete tradicional", "descricao": null, "preco": "R$ 5,00" },
+        { "nome": "Omelete c/ vinagrete", "descricao": null, "preco": "R$ 7,00" },
+        { "nome": "Omelete c/ presunto e queijo", "descricao": null, "preco": "R$ 8,00" },
+        { "nome": "Omelete c/ carne moída", "descricao": null, "preco": "R$ 8,00" },
+        { "nome": "Omelete encantado", "descricao": "Frango e queijo", "preco": "R$ 12,00" },
+        {
+          "nome": "Omelete c/ carne",
+          "descricao": "Carne de sol desfiada",
+          "preco": "R$ 13,00"
+        },
+        {
+          "nome": "Omelete tropical",
+          "descricao": "Carne de sol desfiada e queijo",
+          "preco": "R$ 14,00"
         }
+      ]
+    },
+    {
+      "id": "sopas-e-caldos",
+      "nome": "Sopas e caldos",
+      "apoio": "Caldo no copo de 300 ml ou 500 ml; sopa no copo de 500 ml.",
+      "pendente": false,
+      "itens": [
+        { "nome": "Caldo de carne c/ ovo", "descricao": "300 ml", "preco": "R$ 13,00" },
+        { "nome": "Caldo de carne c/ ovo", "descricao": "500 ml", "preco": "R$ 17,00" },
+        { "nome": "Sopa de carne", "descricao": "500 ml", "preco": "R$ 17,00" },
+        { "nome": "Sopa de frango", "descricao": "500 ml", "preco": "R$ 17,00" }
+      ]
+    },
+    {
+      "id": "sucos",
+      "nome": "Sucos naturais",
+      "apoio": "Copo 300 ml ou jarra 800 ml.",
+      "pendente": false,
+      "itens": [
+        { "nome": "Acerola", "descricao": null, "preco": "R$ 7,00 / 15,00" },
+        { "nome": "Cajá", "descricao": null, "preco": "R$ 7,00 / 15,00" },
+        { "nome": "Caju", "descricao": null, "preco": "R$ 7,00 / 15,00" },
+        { "nome": "Goiaba", "descricao": null, "preco": "R$ 7,00 / 15,00" },
+        { "nome": "Laranja", "descricao": null, "preco": "R$ 9,00 / 20,00" },
+        { "nome": "Maracujá", "descricao": null, "preco": "R$ 9,00 / 20,00" },
+        { "nome": "Bacuri", "descricao": null, "preco": "R$ 9,00 / 20,00" },
+        { "nome": "Cupuaçu", "descricao": null, "preco": "R$ 9,00 / 20,00" }
+      ]
+    },
+    {
+      "id": "cafes",
+      "nome": "Cafés",
+      "apoio": null,
+      "pendente": false,
+      "itens": [
+        { "nome": "Café simples", "descricao": null, "preco": "R$ 3,00" },
+        { "nome": "Leite", "descricao": null, "preco": "R$ 4,00" },
+        { "nome": "Café c/ leite", "descricao": null, "preco": "R$ 4,00" }
+      ]
+    },
+    {
+      "id": "adicionais",
+      "nome": "Adicionais",
+      "apoio": "Podem ser somados a cuscuz, tapioca, crepioca, omelete ou sanduíche.",
+      "pendente": false,
+      "itens": [
+        { "nome": "Ovo", "descricao": null, "preco": "R$ 3,00" },
+        { "nome": "Presunto", "descricao": "1 fatia", "preco": "R$ 3,00" },
+        { "nome": "Queijo", "descricao": "1 fatia", "preco": "R$ 3,00" },
+        { "nome": "Calabresa", "descricao": null, "preco": "R$ 6,00" },
+        { "nome": "Frango", "descricao": "60 g", "preco": "R$ 6,00" },
+        { "nome": "Carne de sol", "descricao": "60 g", "preco": "R$ 7,00" }
       ]
     }
   ]

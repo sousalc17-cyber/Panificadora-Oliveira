@@ -2,10 +2,10 @@
 /**
  * CTA de WhatsApp.
  *
- * Regra da Etapa 1: o link wa.me só existe quando `site.whatsapp.confirmado`
- * for `true` E houver `href`. Até a padaria confirmar que o número é WhatsApp
- * comercial, o componente renderiza um <span> inerte (aria-disabled), nunca um
- * link quebrado ou silenciosamente apontando para um telefone fixo.
+ * O número (+55 89 99402-6283) foi confirmado como WhatsApp comercial pela
+ * padaria, então `confirmado` é `true` e o link wa.me é renderizado. Se a
+ * confirmação for revertida, o componente volta a um <button disabled>, nunca a
+ * um link quebrado ou silenciosamente apontando para um telefone fixo.
  */
 import site from '../content/site.json';
 

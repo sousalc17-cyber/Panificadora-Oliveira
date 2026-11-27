@@ -3,7 +3,8 @@
  * Início do Cardápio.
  * Mobile: chips roláveis + blocos empilhados.
  * Desktop: índice fixo à esquerda + itens em duas colunas.
- * Nenhum preço é exibido: `preco: null` vira "Preço no balcão".
+ * Preços vêm do cardápio confirmado pela padaria; `preco: null` ainda vira
+ * "Preço no balcão" como rede de segurança.
  */
 import menu from '../content/menu.json';
 ---
@@ -51,7 +52,7 @@ import menu from '../content/menu.json';
                 <h3 id={`${categoria.id}-titulo`}>{categoria.nome}</h3>
                 {categoria.pendente && <span class="categoria__parcial">lista parcial</span>}
               </div>
-              <p class="categoria__apoio">{categoria.apoio}</p>
+              {categoria.apoio && <p class="categoria__apoio">{categoria.apoio}</p>}
 
               <ul class="itens">
                 {categoria.itens.map((item) => (
@@ -72,7 +73,7 @@ import menu from '../content/menu.json';
       </div>
     </div>
 
-    <p class="cardapio__nota">{menu.nota}</p>
+    {menu.nota && <p class="cardapio__nota">{menu.nota}</p>}
   </div>
 </section>
 
