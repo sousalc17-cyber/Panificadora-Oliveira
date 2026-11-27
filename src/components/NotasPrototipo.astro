@@ -1,0 +1,109 @@
+---
+/**
+ * Painel de avaliação. NÃO faz parte do site final: existe para o cliente ver,
+ * de forma explícita, o que ainda está pendente e onde cada placeholder aparece.
+ */
+import site from '../content/site.json';
+---
+
+<section class="notas" aria-labelledby="notas-titulo">
+  <div class="container">
+    <p class="notas__etiqueta">Painel de avaliação — fora do site final</p>
+    <h2 id="notas-titulo" class="notas__titulo">Placeholders desta etapa</h2>
+    <p class="notas__texto">
+      Nenhum dado comercial foi inventado. Tudo que depende da padaria está marcado abaixo e
+      visível nas telas. A seção sai do ar quando os dados chegarem.
+    </p>
+
+    <table class="notas__tabela">
+      <caption class="sr-only">Placeholders pendentes e onde aparecem</caption>
+      <thead>
+        <tr>
+          <th scope="col">Pendência</th>
+          <th scope="col">Onde aparece</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          site.placeholders.map((item) => (
+            <tr>
+              <td>{item.rotulo}</td>
+              <td>{item.onde}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+
+    <p class="notas__link">
+      <a href="/prototipo">Abrir as duas telas lado a lado (390 px e 1280 px)</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .notas {
+    padding-block: var(--e8);
+    background-color: var(--crosta);
+    color: var(--miolo);
+  }
+
+  .notas__etiqueta {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--acafrao-claro);
+  }
+
+  .notas__titulo {
+    margin-top: var(--e2);
+    color: var(--miolo);
+    font-size: var(--t-h3);
+  }
+
+  .notas__texto {
+    margin-top: var(--e3);
+    max-width: 62ch;
+    font-size: var(--t-sm);
+    line-height: 1.6;
+    color: rgb(255 251 243 / 0.82);
+  }
+
+  .notas__tabela {
+    width: 100%;
+    margin-top: var(--e5);
+    border-collapse: collapse;
+    font-size: var(--t-sm);
+  }
+
+  .notas__tabela th,
+  .notas__tabela td {
+    padding: var(--e3) var(--e3) var(--e3) 0;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid rgb(255 251 243 / 0.16);
+  }
+
+  .notas__tabela th {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(255 251 243 / 0.62);
+  }
+
+  .notas__tabela td:last-child {
+    color: rgb(255 251 243 / 0.74);
+  }
+
+  .notas__link {
+    margin-top: var(--e5);
+    font-size: var(--t-sm);
+  }
+
+  .notas__link a {
+    color: var(--acafrao-claro);
+    text-underline-offset: 4px;
+  }
+</style>

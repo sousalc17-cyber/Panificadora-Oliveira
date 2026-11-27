@@ -1,0 +1,119 @@
+---
+/** Avaliação lado a lado: 390 px (mobile) e 1280 px (desktop). */
+import Base from '../layouts/Base.astro';
+
+const telas = [
+  { rotulo: 'Mobile', medida: '390 × 844', largura: 390, altura: 844 },
+  { rotulo: 'Desktop', medida: '1280 × 900', largura: 1280, altura: 900 },
+];
+---
+
+<Base titulo="Protótipo — duas telas">
+  <main class="telas">
+    <header class="telas__cabecalho">
+      <h1 class="telas__titulo">Protótipo — duas telas</h1>
+      <p class="telas__texto">
+        Mesma página em dois viewports. Role na horizontal para comparar. Nenhum link de WhatsApp
+        está ativo nesta etapa.
+      </p>
+      <p class="telas__texto"><a href="/">Abrir a página inteira</a></p>
+    </header>
+
+    <div class="telas__grade">
+      {
+        telas.map((tela) => (
+          <figure class="tela">
+            <figcaption class="tela__legenda">
+              <span class="tela__rotulo">{tela.rotulo}</span>
+              <span class="tela__medida">{tela.medida}</span>
+            </figcaption>
+            <div class="tela__moldura" style={`width: ${tela.largura}px;`}>
+              <iframe
+                src="/"
+                title={`Protótipo em ${tela.medida}`}
+                width={tela.largura}
+                height={tela.altura}
+                loading="eager"
+              />
+            </div>
+          </figure>
+        ))
+      }
+    </div>
+  </main>
+</Base>
+
+<style>
+  .telas {
+    padding: var(--e6) 0 var(--e9);
+    background-color: var(--farinha);
+  }
+
+  .telas__cabecalho {
+    max-width: var(--container);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .telas__titulo {
+    font-size: var(--t-h3);
+  }
+
+  .telas__texto {
+    margin-top: var(--e2);
+    font-size: var(--t-sm);
+    color: var(--tinta-suave);
+    max-width: 62ch;
+  }
+
+  .telas__texto a {
+    color: var(--crosta);
+    text-underline-offset: 4px;
+  }
+
+  .telas__grade {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--e6);
+    margin-top: var(--e6);
+    padding: 0 var(--gutter) var(--e5);
+    overflow-x: auto;
+  }
+
+  .tela {
+    margin: 0;
+    flex: 0 0 auto;
+  }
+
+  .tela__legenda {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e2);
+    margin-bottom: var(--e2);
+  }
+
+  .tela__rotulo {
+    font-size: var(--t-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .tela__medida {
+    font-size: var(--t-xs);
+    color: var(--tinta-suave);
+  }
+
+  .tela__moldura {
+    border: 1px solid var(--borda-forte);
+    border-radius: var(--r2);
+    overflow: hidden;
+    background-color: var(--miolo);
+    box-shadow: var(--sombra);
+  }
+
+  .tela__moldura iframe {
+    display: block;
+    border: 0;
+  }
+</style>

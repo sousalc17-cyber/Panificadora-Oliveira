@@ -1,0 +1,62 @@
+---
+/** Faixa de provas: 2×2 no mobile, linha única com separadores no desktop. */
+interface Props {
+  itens: { texto: string; verificavel?: boolean }[];
+}
+
+const { itens } = Astro.props;
+---
+
+<ul class="provas">
+  {
+    itens.map((item) => (
+      <li class="provas__item">
+        <span class="provas__marca" aria-hidden="true" />
+        <span>{item.texto}</span>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .provas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e3) var(--e4);
+    margin-top: var(--e6);
+    padding-top: var(--e5);
+    border-top: 1px solid var(--borda);
+  }
+
+  .provas__item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--e2);
+    font-size: var(--t-xs);
+    line-height: 1.45;
+    color: var(--tinta-suave);
+    text-wrap: pretty;
+  }
+
+  .provas__marca {
+    flex: 0 0 auto;
+    width: 5px;
+    height: 5px;
+    margin-top: 6px;
+    border-radius: var(--r-pill);
+    background-color: var(--manjericao);
+  }
+
+  @media (min-width: 900px) {
+    .provas {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--e4);
+      margin-top: var(--e7);
+    }
+
+    .provas__item + .provas__item {
+      padding-left: var(--e4);
+      border-left: 1px solid var(--borda);
+    }
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+// Fraunces: `full.css` habilita os eixos SOFT/WONK usados na identidade.
+// Archivo: apenas o eixo de peso (suficiente para texto).
+import '@fontsource-variable/fraunces/full.css';
+import '@fontsource-variable/archivo';
+import '../styles/global.css';
+
+interface Props {
+  titulo: string;
+  descricao?: string;
+}
+
+const {
+  titulo,
+  descricao = 'Protótipo da landing page da Panificadora Oliveira — Floriano, PI.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo}</title>
+    <meta name="description" content={descricao} />
+    <!-- Protótipo interno: não deve ser indexado enquanto houver placeholders. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <a class="pular-para-conteudo" href="#conteudo">Pular para o conteúdo</a>
+    <slot />
+  </body>
+</html>

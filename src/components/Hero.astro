@@ -1,0 +1,118 @@
+---
+/**
+ * Hero — primeira dobra.
+ * Todo texto vem de `site.json` e é rastreável a um fato verificado.
+ * A imagem é placeholder até a padaria enviar a foto do forno.
+ */
+import site from '../content/site.json';
+import BotaoWhatsApp from './BotaoWhatsApp.astro';
+import ProvaFaixa from './ProvaFaixa.astro';
+import BlocoFoto from './BlocoFoto.astro';
+---
+
+<section class="hero" aria-labelledby="hero-titulo">
+  <div class="container hero__grade">
+    <div class="hero__texto">
+      <p class="eyebrow">{site.eyebrow}</p>
+      <h1 id="hero-titulo" class="hero__titulo">{site.hero.titulo}</h1>
+      <p class="hero__lede">{site.hero.lede}</p>
+
+      <div class="hero__acoes">
+        <div class="hero__cta">
+          <BotaoWhatsApp rotulo="Pedir pelo WhatsApp" variante="primario" aviso />
+        </div>
+        <a class="botao botao--fantasma" href="#cardapio">Ver o cardápio</a>
+      </div>
+
+      <ProvaFaixa itens={site.provas} />
+    </div>
+
+    <div class="hero__midia">
+      <BlocoFoto
+        proporcao="4 / 5"
+        rotulo="[FOTO PENDENTE] Forno ou pão saindo"
+        detalhe="vertical 4:5 · mín. 1200 px de largura"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--e7) var(--e8);
+  }
+
+  .hero__grade {
+    display: grid;
+    gap: var(--e6);
+  }
+
+  .hero__titulo {
+    margin-top: var(--e3);
+    max-width: 15ch;
+  }
+
+  .hero__lede {
+    margin-top: var(--e4);
+    max-width: var(--medida-lede);
+    font-size: var(--t-lg);
+    line-height: var(--lh-lg);
+    color: var(--tinta-suave);
+  }
+
+  .hero__acoes {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--e3);
+    margin-top: var(--e6);
+  }
+
+  .hero__cta {
+    width: 100%;
+  }
+
+  .hero__cta :global(.botao--primario) {
+    width: 100%;
+  }
+
+  /* O link secundário acompanha o alinhamento à esquerda da coluna. */
+  .hero__acoes > :global(.botao--fantasma) {
+    justify-content: flex-start;
+  }
+
+  .hero__midia {
+    order: 2;
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      padding-block: var(--e8) var(--e9);
+    }
+
+    .hero__grade {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      align-items: center;
+      gap: var(--e8);
+    }
+
+    .hero__titulo {
+      max-width: 14ch;
+    }
+
+    .hero__acoes {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--e5);
+      margin-top: var(--e7);
+    }
+
+    .hero__cta {
+      width: auto;
+    }
+
+    .hero__cta :global(.botao--primario) {
+      width: auto;
+    }
+  }
+</style>

@@ -1,0 +1,260 @@
+---
+/**
+ * Header — logo (placeholder), navegação e CTA.
+ * Mobile: menu nativo em <details>, sem JavaScript.
+ */
+import BotaoWhatsApp from './BotaoWhatsApp.astro';
+
+const links = [
+  { rotulo: 'Cardápio', href: '#cardapio' },
+  { rotulo: 'A casa', href: null },
+  { rotulo: 'Onde estamos', href: null },
+  { rotulo: 'Contato', href: null },
+];
+---
+
+<header class="cabecalho">
+  <div class="container cabecalho__interno">
+    <a class="logo" href="/" aria-label="Panificadora Oliveira — página inicial">
+      <span class="logo__slot" aria-hidden="true">LOGO</span>
+      <span class="sr-only">[PENDENTE: logotipo em vetor]</span>
+    </a>
+
+    <nav class="nav" aria-label="Navegação principal">
+      {
+        links.map((link) =>
+          link.href ? (
+            <a class="nav__link" href={link.href}>
+              {link.rotulo}
+            </a>
+          ) : (
+            <span class="nav__link nav__link--pendente" title="Seção prevista para a próxima etapa">
+              {link.rotulo}
+              <span class="sr-only"> (seção ainda não construída)</span>
+            </span>
+          ),
+        )
+      }
+    </nav>
+
+    <div class="cabecalho__acoes">
+      <div class="cabecalho__cta">
+        <BotaoWhatsApp rotulo="Pedir pelo WhatsApp" variante="primario" />
+      </div>
+      <div class="cabecalho__cta-icone">
+        <BotaoWhatsApp rotulo="Pedir pelo WhatsApp" variante="primario" somenteIcone />
+      </div>
+
+      <details class="menu-mobile">
+        <summary class="menu-mobile__gatilho">
+          <span class="menu-mobile__barras" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="sr-only">Abrir menu de navegação</span>
+        </summary>
+        <nav class="menu-mobile__painel" aria-label="Navegação principal (mobile)">
+          {
+            links.map((link) =>
+              link.href ? (
+                <a class="menu-mobile__link" href={link.href}>
+                  {link.rotulo}
+                </a>
+              ) : (
+                <span class="menu-mobile__link menu-mobile__link--pendente">
+                  {link.rotulo}
+                  <span class="menu-mobile__tag">em breve</span>
+                </span>
+              ),
+            )
+          }
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+
+<style>
+  .cabecalho {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: var(--farinha);
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .cabecalho__interno {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e4);
+    min-height: 56px;
+  }
+
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    flex: 0 0 auto;
+  }
+
+  /* Placeholder do logotipo: bloco com medida reservada, sem inventar marca. */
+  .logo__slot {
+    display: grid;
+    place-items: center;
+    width: 116px;
+    height: 30px;
+    border: 1px dashed var(--borda-forte);
+    border-radius: var(--r1);
+    font-family: var(--fonte-texto);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    color: var(--tinta-suave);
+    background-color: var(--miolo);
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .cabecalho__acoes {
+    display: flex;
+    align-items: center;
+    gap: var(--e2);
+  }
+
+  .cabecalho__cta {
+    display: none;
+  }
+
+  .menu-mobile {
+    position: relative;
+  }
+
+  .menu-mobile__gatilho {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--r1);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .menu-mobile__gatilho::-webkit-details-marker {
+    display: none;
+  }
+
+  .menu-mobile__barras {
+    display: grid;
+    gap: 4px;
+    width: 20px;
+  }
+
+  .menu-mobile__barras i {
+    display: block;
+    height: 2px;
+    background-color: var(--crosta);
+    border-radius: 2px;
+  }
+
+  .menu-mobile__painel {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 60;
+    display: grid;
+    gap: var(--e1);
+    width: min(272px, calc(100vw - 2 * var(--gutter)));
+    padding: var(--e4);
+    background-color: var(--miolo);
+    border: 1px solid var(--borda);
+    border-radius: var(--r2);
+    box-shadow: var(--sombra);
+  }
+
+  .menu-mobile__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--e3);
+    min-height: 44px;
+    padding: var(--e2) var(--e3);
+    border-radius: var(--r1);
+    font-size: var(--t-base);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .menu-mobile__link:hover {
+    background-color: var(--farinha);
+  }
+
+  .menu-mobile__link--pendente {
+    color: var(--tinta-suave);
+    font-weight: 500;
+    cursor: default;
+  }
+
+  .menu-mobile__tag {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+  }
+
+  @media (min-width: 900px) {
+    .cabecalho__interno {
+      min-height: 72px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: var(--e6);
+      margin-inline: auto;
+    }
+
+    .nav__link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      font-size: var(--t-sm);
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+    }
+
+    .nav__link:hover {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 6px;
+    }
+
+    .nav__link--pendente {
+      color: var(--tinta-suave);
+      font-weight: 500;
+      text-decoration: underline dotted var(--borda-forte);
+      text-underline-offset: 6px;
+      cursor: default;
+    }
+
+    .nav__link--pendente:hover {
+      text-decoration: underline dotted var(--borda-forte);
+    }
+
+    .cabecalho__cta {
+      display: block;
+    }
+
+    .cabecalho__cta-icone,
+    .menu-mobile {
+      display: none;
+    }
+
+    .logo__slot {
+      width: 132px;
+      height: 32px;
+    }
+  }
+</style>

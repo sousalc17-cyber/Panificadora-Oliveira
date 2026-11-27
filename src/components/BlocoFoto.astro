@@ -1,0 +1,70 @@
+---
+/**
+ * Bloco de imagem reservada.
+ * Nunca renderiza foto genérica: mantém a proporção (zero CLS) e mostra o
+ * placeholder até o cliente enviar a foto real.
+ */
+interface Props {
+  proporcao?: string;
+  rotulo: string;
+  detalhe?: string;
+  tom?: 'pedra' | 'crosta';
+}
+
+const { proporcao = '4 / 5', rotulo, detalhe, tom = 'pedra' } = Astro.props;
+---
+
+<figure class="foto" style={`--proporcao: ${proporcao};`}>
+  <div class={`foto__vazio foto__vazio--${tom}`} role="img" aria-label={rotulo}>
+    <span class="foto__rotulo">{rotulo}</span>
+    {detalhe && <span class="foto__detalhe">{detalhe}</span>}
+  </div>
+</figure>
+
+<style>
+  .foto {
+    margin: 0;
+    width: 100%;
+  }
+
+  .foto__vazio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--e2);
+    aspect-ratio: var(--proporcao);
+    padding: var(--e5);
+    border-radius: var(--r2);
+    text-align: center;
+  }
+
+  .foto__vazio--pedra {
+    background-color: var(--pedra);
+    border: 1px dashed var(--borda-forte);
+    color: var(--crosta);
+  }
+
+  .foto__vazio--crosta {
+    background-color: var(--crosta);
+    border: 1px dashed rgb(255 251 243 / 0.28);
+    color: var(--miolo);
+  }
+
+  .foto__rotulo {
+    font-family: var(--fonte-texto);
+    font-size: var(--t-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    max-width: 22ch;
+    line-height: 1.5;
+  }
+
+  .foto__detalhe {
+    font-size: 0.75rem;
+    line-height: 1.5;
+    opacity: 0.78;
+    max-width: 26ch;
+  }
+</style>

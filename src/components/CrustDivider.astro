@@ -1,0 +1,35 @@
+---
+/**
+ * "Borda de crosta" — o elemento memorável da identidade.
+ * Um único path, usado no máximo 3 vezes na página inteira.
+ */
+interface Props {
+  cor?: string;
+  altura?: number;
+}
+
+const { cor = 'var(--pedra)', altura = 40 } = Astro.props;
+---
+
+<div class="crosta" style={`color: ${cor}; height: ${altura}px;`} aria-hidden="true">
+  <svg viewBox="0 0 1440 40" preserveAspectRatio="none" focusable="false">
+    <path
+      fill="currentColor"
+      d="M0 40V18C60 12 120 22 180 16S300 6 360 14S480 24 540 16S660 8 720 16S840 24 900 16S1020 8 1080 16S1200 24 1260 16S1380 10 1440 16V40Z"
+    />
+  </svg>
+</div>
+
+<style>
+  .crosta {
+    width: 100%;
+    line-height: 0;
+    margin-block: 0;
+  }
+
+  .crosta svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

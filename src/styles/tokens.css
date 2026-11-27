@@ -1,0 +1,75 @@
+/* ==========================================================================
+   Panificadora Oliveira — Design tokens (Etapa 1)
+   Fonte única de verdade visual. Nenhum valor cru dentro de componente.
+   Contrastes verificados por cálculo (WCAG 2.2) sobre o fundo indicado.
+   ========================================================================== */
+
+:root {
+  /* ---- Cor -------------------------------------------------------------- */
+  --crosta: #2a1b12;        /* texto principal — 14,5:1 sobre --farinha */
+  --miolo: #fffbf3;         /* cartões, texto sobre crosta — 16,1:1 */
+  --farinha: #f6efe1;       /* fundo dominante */
+  --pedra: #d8cdb9;         /* bordas, fundos secundários — crosta 10,6:1 */
+  --acafrao: #c9862f;       /* superfície do CTA — crosta 5,5:1 (AA) */
+  --acafrao-claro: #d99745; /* hover do CTA — crosta 6,6:1 (AA) */
+  --manjericao: #4a5a3a;    /* selos, foco — farinha 6,5:1 */
+  --tinta-suave: #5a4636;   /* texto secundário — 7,8:1 sobre farinha */
+
+  --borda: rgb(42 27 18 / 0.12);
+  --borda-forte: rgb(42 27 18 / 0.26);
+
+  /* ---- Tipografia ------------------------------------------------------- */
+  --fonte-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  --fonte-texto: "Archivo Variable", "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --t-h1: clamp(2.25rem, 1.6rem + 3.4vw, 4.25rem);   /* 36 → 68 px */
+  --t-h2: clamp(1.75rem, 1.35rem + 1.8vw, 2.75rem);  /* 28 → 44 px */
+  --t-h3: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);   /* 20 → 24 px */
+  --t-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.25rem);
+  --t-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
+  --t-sm: 0.9375rem;
+  --t-xs: 0.8125rem;
+
+  --lh-h1: 1.02;
+  --lh-h2: 1.1;
+  --lh-h3: 1.25;
+  --lh-lg: 1.55;
+  --lh-base: 1.65;
+  --lh-sm: 1.6;
+
+  --ls-eyebrow: 0.08em;
+
+  /* ---- Espaço (base 4) -------------------------------------------------- */
+  --e1: 4px;
+  --e2: 8px;
+  --e3: 12px;
+  --e4: 16px;
+  --e5: 20px;
+  --e6: 28px;
+  --e7: 40px;
+  --e8: 56px;
+  --e9: 80px;
+  --e10: 120px;
+
+  /* ---- Layout ----------------------------------------------------------- */
+  --container: 1120px;
+  --gutter: clamp(20px, 5vw, 40px);
+  --respiro: clamp(56px, 8vw, 120px);
+  --medida: 62ch;
+  --medida-lede: 46ch;
+
+  /* ---- Forma ------------------------------------------------------------ */
+  --r1: 4px;
+  --r2: 10px;
+  --r3: 20px;
+  --r-pill: 999px;
+  --sombra: 0 1px 2px rgb(42 27 18 / 0.06), 0 10px 26px -14px rgb(42 27 18 / 0.22);
+
+  /* ---- Movimento -------------------------------------------------------- */
+  --t-hover: 180ms;
+  --t-entrada: 240ms;
+  --curva: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* ---- Foco ------------------------------------------------------------- */
+  --foco: var(--manjericao);
+}

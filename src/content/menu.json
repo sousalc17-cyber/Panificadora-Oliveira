@@ -1,0 +1,112 @@
+{
+  "provisorio": true,
+  "aviso": "Cardápio em atualização",
+  "titulo": "O que sai do forno",
+  "lede": "Pães, café da manhã, confeitaria, salgados e conveniência. Os valores são informados no balcão e pelo WhatsApp.",
+  "nota": "[PENDENTE: cardápio oficial por categoria, com nomes exatos e descrições — os itens abaixo vêm do que a padaria publica no Instagram e estão marcados como lista parcial.]",
+  "rotuloPrecoAusente": "Preço no balcão",
+  "categorias": [
+    {
+      "id": "paes",
+      "nome": "Pães",
+      "apoio": "A fornada do dia.",
+      "pendente": true,
+      "itens": [
+        {
+          "nome": "Pães da fornada",
+          "descricao": null,
+          "preco": null,
+          "pendente": true
+        }
+      ]
+    },
+    {
+      "id": "cafe-da-manha",
+      "nome": "Café da manhã",
+      "apoio": "Servido desde a abertura.",
+      "pendente": true,
+      "itens": [
+        {
+          "nome": "Cuscuz",
+          "descricao": null,
+          "preco": null,
+          "pendente": false
+        }
+      ]
+    },
+    {
+      "id": "confeitaria",
+      "nome": "Confeitaria",
+      "apoio": "Bolos, tortas e doces.",
+      "pendente": true,
+      "itens": [
+        {
+          "nome": "Tortas",
+          "descricao": null,
+          "preco": null,
+          "pendente": false
+        },
+        {
+          "nome": "Bolos",
+          "descricao": "Bolos redondos com cobertura.",
+          "preco": null,
+          "pendente": false
+        },
+        {
+          "nome": "Brownie",
+          "descricao": null,
+          "preco": null,
+          "pendente": false
+        }
+      ]
+    },
+    {
+      "id": "salgados",
+      "nome": "Salgados",
+      "apoio": "Para levar ou comer no local.",
+      "pendente": true,
+      "itens": [
+        {
+          "nome": "Salgados",
+          "descricao": null,
+          "preco": null,
+          "pendente": true
+        }
+      ]
+    },
+    {
+      "id": "pratos-do-dia",
+      "nome": "Pratos do dia",
+      "apoio": "Pratos que variam ao longo da semana.",
+      "pendente": true,
+      "itens": [
+        {
+          "nome": "Filé trinchado com fritas",
+          "descricao": null,
+          "preco": null,
+          "pendente": false
+        },
+        {
+          "nome": "Hambúrguer em dias temáticos",
+          "descricao": null,
+          "preco": null,
+          "pendente": false
+        }
+      ]
+    },
+    {
+      "id": "conveniencia",
+      "nome": "Conveniência",
+      "apoio": "Itens de conveniência da loja.",
+      "pendente": true,
+      "itens": [
+        {
+          "nome": "Itens de conveniência",
+          "descricao": null,
+          "preco": null,
+          "pendente": true
+        }
+      ]
+    }
+  ]
+}

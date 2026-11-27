@@ -1,0 +1,319 @@
+---
+/**
+ * Início do Cardápio.
+ * Mobile: chips roláveis + blocos empilhados.
+ * Desktop: índice fixo à esquerda + itens em duas colunas.
+ * Nenhum preço é exibido: `preco: null` vira "Preço no balcão".
+ */
+import menu from '../content/menu.json';
+---
+
+<section class="cardapio" id="cardapio" aria-labelledby="cardapio-titulo">
+  <div class="container">
+    <header class="cardapio__cabecalho">
+      <p class="eyebrow">Cardápio</p>
+      <h2 id="cardapio-titulo" class="cardapio__titulo">{menu.titulo}</h2>
+      <p class="cardapio__lede">{menu.lede}</p>
+      {menu.provisorio && <p class="selo cardapio__selo">{menu.aviso}</p>}
+    </header>
+
+    <nav class="chips" aria-label="Categorias do cardápio">
+      {
+        menu.categorias.map((categoria) => (
+          <a class="chips__link" href={`#${categoria.id}`}>
+            {categoria.nome}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="cardapio__corpo">
+      <aside class="rail" aria-label="Índice de categorias">
+        <p class="rail__rotulo">Categorias</p>
+        <ul class="rail__lista">
+          {
+            menu.categorias.map((categoria) => (
+              <li>
+                <a class="rail__link" href={`#${categoria.id}`}>
+                  {categoria.nome}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </aside>
+
+      <div class="cardapio__blocos">
+        {
+          menu.categorias.map((categoria) => (
+            <section class="categoria" id={categoria.id} aria-labelledby={`${categoria.id}-titulo`}>
+              <div class="categoria__cabecalho">
+                <h3 id={`${categoria.id}-titulo`}>{categoria.nome}</h3>
+                {categoria.pendente && <span class="categoria__parcial">lista parcial</span>}
+              </div>
+              <p class="categoria__apoio">{categoria.apoio}</p>
+
+              <ul class="itens">
+                {categoria.itens.map((item) => (
+                  <li class="item">
+                    <div class="item__texto">
+                      <p class="item__nome">{item.nome}</p>
+                      {item.descricao && <p class="item__descricao">{item.descricao}</p>}
+                    </div>
+                    <p class={`item__preco${item.preco ? '' : ' item__preco--ausente'}`}>
+                      {item.preco ?? menu.rotuloPrecoAusente}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ))
+        }
+      </div>
+    </div>
+
+    <p class="cardapio__nota">{menu.nota}</p>
+  </div>
+</section>
+
+<style>
+  .cardapio {
+    padding-block: var(--e8);
+  }
+
+  .cardapio__cabecalho {
+    max-width: 58ch;
+  }
+
+  .cardapio__titulo {
+    margin-top: var(--e3);
+  }
+
+  .cardapio__lede {
+    margin-top: var(--e4);
+    font-size: var(--t-lg);
+    line-height: var(--lh-lg);
+    color: var(--tinta-suave);
+    max-width: var(--medida-lede);
+  }
+
+  .cardapio__selo {
+    margin-top: var(--e5);
+  }
+
+  /* ---- Chips mobile ---------------------------------------------------- */
+
+  .chips {
+    display: flex;
+    gap: var(--e2);
+    margin-top: var(--e6);
+    margin-inline: calc(var(--gutter) * -1);
+    padding-inline: var(--gutter);
+    padding-block: var(--e2);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    position: sticky;
+    top: 56px;
+    z-index: 10;
+    background-color: var(--farinha);
+    border-bottom: 1px solid var(--borda);
+    scrollbar-width: none;
+  }
+
+  .chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chips__link {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: var(--e2) var(--e5);
+    border: 1px solid var(--borda-forte);
+    border-radius: var(--r-pill);
+    background-color: var(--miolo);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    text-decoration: none;
+    scroll-snap-align: start;
+    white-space: nowrap;
+  }
+
+  .chips__link:hover {
+    border-color: var(--crosta);
+  }
+
+  /* ---- Índice desktop -------------------------------------------------- */
+
+  .rail {
+    display: none;
+  }
+
+  .cardapio__corpo {
+    margin-top: var(--e6);
+  }
+
+  .cardapio__blocos {
+    display: grid;
+    gap: var(--e5);
+  }
+
+  .categoria {
+    padding: var(--e5);
+    background-color: var(--miolo);
+    border: 1px solid var(--borda);
+    border-radius: var(--r2);
+    box-shadow: var(--sombra);
+    scroll-margin-top: 128px;
+  }
+
+  .categoria__cabecalho {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--e3);
+  }
+
+  .categoria__parcial {
+    flex: 0 0 auto;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    border: 1px dashed var(--borda-forte);
+    border-radius: var(--r-pill);
+    padding: 2px var(--e2);
+  }
+
+  .categoria__apoio {
+    margin-top: var(--e1);
+    font-size: var(--t-sm);
+    color: var(--tinta-suave);
+  }
+
+  .itens {
+    margin-top: var(--e4);
+  }
+
+  .item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--e4);
+    padding-block: var(--e4);
+    border-top: 1px solid var(--borda);
+  }
+
+  .item__nome {
+    font-size: var(--t-base);
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .item__descricao {
+    margin-top: 2px;
+    font-size: var(--t-sm);
+    line-height: var(--lh-sm);
+    color: var(--tinta-suave);
+    max-width: 42ch;
+  }
+
+  .item__preco {
+    flex: 0 0 auto;
+    font-size: var(--t-sm);
+    color: var(--tinta-suave);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .item__preco--ausente {
+    font-style: italic;
+  }
+
+  .cardapio__nota {
+    margin-top: var(--e6);
+    padding-top: var(--e4);
+    border-top: 1px solid var(--borda);
+    font-size: var(--t-xs);
+    line-height: 1.5;
+    color: var(--tinta-suave);
+    max-width: 70ch;
+  }
+
+  @media (min-width: 900px) {
+    .cardapio {
+      padding-block: var(--e9);
+    }
+
+    .chips {
+      display: none;
+    }
+
+    .cardapio__corpo {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr);
+      gap: var(--e8);
+      margin-top: var(--e7);
+    }
+
+    .rail {
+      display: block;
+      position: sticky;
+      top: 104px;
+      align-self: start;
+    }
+
+    .rail__rotulo {
+      font-size: var(--t-xs);
+      font-weight: 600;
+      letter-spacing: var(--ls-eyebrow);
+      text-transform: uppercase;
+      color: var(--tinta-suave);
+      padding-bottom: var(--e3);
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .rail__lista {
+      display: grid;
+      gap: 2px;
+      margin-top: var(--e3);
+    }
+
+    .rail__link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      font-size: var(--t-sm);
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--crosta);
+    }
+
+    .rail__link:hover {
+      color: var(--manjericao);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    .cardapio__blocos {
+      gap: var(--e5);
+    }
+
+    .categoria {
+      padding: var(--e6);
+    }
+
+    .itens {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--e6);
+    }
+
+    .item {
+      max-width: 520px;
+    }
+  }
+</style>

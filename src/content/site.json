@@ -1,0 +1,81 @@
+{
+  "nome": "Panificadora Oliveira",
+  "eyebrow": "Padaria • Confeitaria • Conveniência",
+  "hero": {
+    "titulo": "Um lugar pra chamar de seu — desde as 6 da manhã.",
+    "lede": "Pão quentinho, café da manhã e confeitaria na Av. Santos Dumont, 521 — Manguinha, Floriano. De segunda a domingo."
+  },
+  "whatsapp": {
+    "numeroExibido": "+55 89 99402-6283",
+    "href": null,
+    "confirmado": false
+  },
+  "provas": [
+    {
+      "texto": "4,5★ no Google · 50 avaliações",
+      "verificavel": true
+    },
+    {
+      "texto": "Abre às 6h, todos os dias",
+      "verificavel": true
+    },
+    {
+      "texto": "Consumo no local · para levar · delivery",
+      "verificavel": true
+    },
+    {
+      "texto": "Estacionamento gratuito",
+      "verificavel": true
+    }
+  ],
+  "placeholders": [
+    {
+      "id": "logo",
+      "rotulo": "Logotipo em vetor",
+      "onde": "header, favicon",
+      "bloqueia": "identidade definitiva"
+    },
+    {
+      "id": "cardapio",
+      "rotulo": "Cardápio oficial com nomes e descrições",
+      "onde": "seção Cardápio",
+      "bloqueia": "lista definitiva"
+    },
+    {
+      "id": "precos",
+      "rotulo": "Preços por item",
+      "onde": "coluna de valor",
+      "bloqueia": "exibição de valores"
+    },
+    {
+      "id": "foto-forno",
+      "rotulo": "Foto do forno ou do pão saindo (4:5)",
+      "onde": "hero",
+      "bloqueia": "imagem principal"
+    },
+    {
+      "id": "fotos-produto",
+      "rotulo": "Fotos de produto por categoria",
+      "onde": "cardápio (v2) e galeria",
+      "bloqueia": "apoio visual do cardápio"
+    },
+    {
+      "id": "whatsapp",
+      "rotulo": "Confirmação de que o número é WhatsApp comercial",
+      "onde": "todos os CTAs",
+      "bloqueia": "ativação do link wa.me"
+    },
+    {
+      "id": "horario",
+      "rotulo": "Horário da Matriz (Google 22h30 × Instagram 22h)",
+      "onde": "faixa de provas, status de aberto",
+      "bloqueia": "texto de horário"
+    },
+    {
+      "id": "autorizacao",
+      "rotulo": "Autorização de uso das fotos e da nota do Google",
+      "onde": "hero",
+      "bloqueia": "prova social"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Menu from '../components/Menu.astro';
+import CrustDivider from '../components/CrustDivider.astro';
+import NotasPrototipo from '../components/NotasPrototipo.astro';
+---
+
+<Base titulo="Panificadora Oliveira — protótipo (Etapa 1)">
+  <Header />
+  <main id="conteudo">
+    <Hero />
+    <CrustDivider cor="var(--pedra)" altura={36} />
+    <Menu />
+    <CrustDivider cor="var(--pedra)" altura={36} />
+    <NotasPrototipo />
+  </main>
+</Base>
