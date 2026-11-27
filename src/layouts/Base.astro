@@ -4,16 +4,31 @@
 import '@fontsource-variable/fraunces/full.css';
 import '@fontsource-variable/archivo';
 import '../styles/global.css';
+import { ehProducao, origemDoSite } from '../lib/siteUrl';
 
 interface Props {
   titulo: string;
-  descricao?: string;
+  descricao: string;
+  imagem?: string;
+  noindex?: boolean;
+  /** Objeto Schema.org serializado no <head> quando a página declara um. */
+  dadosEstruturados?: Record<string, unknown> | null;
 }
 
 const {
   titulo,
-  descricao = 'Protótipo da landing page da Panificadora Oliveira — Floriano, PI.',
+  descricao,
+  imagem = '/og-image.png',
+  noindex = false,
+  dadosEstruturados = null,
 } = Astro.props;
+
+// Em preview a origem é o próprio host do deploy; em produção, o domínio final.
+const origem = origemDoSite();
+const canonical = new URL(Astro.url.pathname, origem);
+const imagemAbsoluta = new URL(imagem, origem);
+const bloquearIndexacao = noindex || !ehProducao();
+const altImagem = 'Panificadora Oliveira — padaria, confeitaria e café da manhã em Floriano, PI';
 ---
 
 <!doctype html>
@@ -23,9 +38,40 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{titulo}</title>
     <meta name="description" content={descricao} />
-    <!-- Protótipo interno: não deve ser indexado enquanto houver placeholders. -->
-    <meta name="robots" content="noindex, nofollow" />
+    <link rel="canonical" href={canonical} />
+    {
+      bloquearIndexacao ? (
+        <meta name="robots" content="noindex, nofollow" />
+      ) : (
+        <meta name="robots" content="index, follow, max-image-preview:large" />
+      )
+    }
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Panificadora Oliveira" />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descricao} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imagemAbsoluta} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={altImagem} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={titulo} />
+    <meta name="twitter:description" content={descricao} />
+    <meta name="twitter:image" content={imagemAbsoluta} />
+
+    <meta name="theme-color" content="#f6efe1" />
     <link rel="icon" href="data:," />
+
+    {
+      dadosEstruturados && (
+        <script type="application/ld+json" set:html={JSON.stringify(dadosEstruturados)} />
+      )
+    }
   </head>
   <body>
     <a class="pular-para-conteudo" href="#conteudo">Pular para o conteúdo</a>

@@ -1,0 +1,238 @@
+---
+/**
+ * Localização + horário.
+ *
+ * O endereço e o horário vêm de `site.json`. O selo "aberto agora" é calculado
+ * no navegador, no fuso da padaria, a partir dos mesmos dados — sem serviço
+ * externo e sem depender de relógio do servidor. Sem JavaScript, o selo não
+ * aparece e a tabela de horário continua legível.
+ */
+import site from '../content/site.json';
+import {
+  enderecoLinha,
+  enderecoCidade,
+  mapaHref,
+  rotaHref,
+  horaCurta,
+  horarioLongo,
+} from '../lib/negocio';
+
+const { horario } = site;
+---
+
+<section class="local" id="onde-estamos" aria-labelledby="local-titulo">
+  <div class="container local__grade">
+    <div class="local__texto">
+      <p class="eyebrow">Onde estamos</p>
+      <h2 id="local-titulo" class="local__titulo">Na Manguinha, na Santos Dumont</h2>
+
+      <address class="local__endereco">
+        <span>{enderecoLinha}</span>
+        <span>{enderecoCidade}</span>
+      </address>
+
+      <div class="local__acoes">
+        <a class="botao botao--primario" href={mapaHref} target="_blank" rel="noopener noreferrer">
+          Abrir no Google Maps
+          <span class="sr-only"> (abre em nova aba)</span>
+        </a>
+        <a class="botao botao--fantasma" href={rotaHref} target="_blank" rel="noopener noreferrer">
+          Traçar rota
+          <span class="sr-only"> (abre em nova aba)</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="local__horario">
+      <h3 class="local__horario-titulo">Horário</h3>
+
+      <p
+        class="status"
+        data-status-horario
+        data-abre={horario.abre}
+        data-fecha={horario.fecha}
+        data-fuso={horario.fuso}
+        data-rotulo-abre={horaCurta(horario.abre)}
+        data-rotulo-fecha={horaCurta(horario.fecha)}
+      >
+        <span class="status__ponto" aria-hidden="true"></span>
+        <span class="status__texto" data-status-texto></span>
+      </p>
+
+      <dl class="horario-lista">
+        <div class="horario-lista__linha">
+          <dt>Segunda a domingo</dt>
+          <dd>{horaCurta(horario.abre)} – {horaCurta(horario.fecha)}</dd>
+        </div>
+      </dl>
+
+      <p class="local__nota">{horarioLongo}, na Matriz.</p>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const el = document.querySelector('[data-status-horario]');
+    if (!(el instanceof HTMLElement)) return;
+
+    const { abre, fecha, fuso } = el.dataset;
+    const minutos = (valor) => {
+      const [h, m] = valor.split(':').map(Number);
+      return h * 60 + m;
+    };
+
+    const partes = new Intl.DateTimeFormat('en-GB', {
+      timeZone: fuso,
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    }).formatToParts(new Date());
+
+    const hora = Number(partes.find((p) => p.type === 'hour').value);
+    const minuto = Number(partes.find((p) => p.type === 'minute').value);
+    const agora = hora * 60 + minuto;
+
+    const aberto = agora >= minutos(abre) && agora < minutos(fecha);
+    const texto = el.querySelector('[data-status-texto]');
+    if (!texto) return;
+
+    texto.textContent = aberto
+      ? `Aberto agora — fecha às ${el.dataset.rotuloFecha}`
+      : `Fechado agora — abre às ${el.dataset.rotuloAbre}`;
+    el.dataset.estado = aberto ? 'aberto' : 'fechado';
+  })();
+</script>
+
+<style>
+  .local {
+    padding-block: var(--e8);
+    background-color: var(--farinha);
+    scroll-margin-top: 72px;
+  }
+
+  .local__grade {
+    display: grid;
+    gap: var(--e7);
+  }
+
+  .local__endereco {
+    display: grid;
+    gap: 2px;
+    margin-top: var(--e4);
+    font-style: normal;
+    font-size: var(--t-lg);
+    line-height: 1.5;
+    color: var(--crosta);
+  }
+
+  .local__acoes {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--e2);
+    margin-top: var(--e6);
+  }
+
+  .local__acoes > :global(.botao--fantasma) {
+    justify-content: flex-start;
+  }
+
+  .local__horario {
+    padding: var(--e6);
+    background-color: var(--miolo);
+    border: 1px solid var(--borda);
+    border-radius: var(--r2);
+    box-shadow: var(--sombra);
+  }
+
+  .local__horario-titulo {
+    font-family: var(--fonte-texto);
+    font-size: var(--t-xs);
+    font-weight: 600;
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    padding-bottom: var(--e3);
+    border-bottom: 1px solid var(--borda);
+  }
+
+  /* O selo só existe depois que o script calcula o estado. */
+  .status {
+    display: none;
+  }
+
+  .status[data-estado] {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e2);
+    margin-top: var(--e4);
+    padding: var(--e1) var(--e3);
+    border: 1px solid var(--borda-forte);
+    border-radius: var(--r-pill);
+    font-size: var(--t-xs);
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--crosta);
+  }
+
+  .status__ponto {
+    width: 7px;
+    height: 7px;
+    border-radius: var(--r-pill);
+    background-color: var(--tinta-suave);
+  }
+
+  .status[data-estado='aberto'] .status__ponto {
+    background-color: var(--manjericao);
+  }
+
+  .horario-lista {
+    margin-top: var(--e4);
+  }
+
+  .horario-lista__linha {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--e4);
+    padding-block: var(--e3);
+    border-bottom: 1px solid var(--borda);
+  }
+
+  .horario-lista dt {
+    font-size: var(--t-base);
+    font-weight: 600;
+  }
+
+  .horario-lista dd {
+    font-size: var(--t-base);
+    color: var(--tinta-suave);
+    white-space: nowrap;
+  }
+
+  .local__nota {
+    margin-top: var(--e4);
+    font-size: var(--t-xs);
+    line-height: 1.5;
+    color: var(--tinta-suave);
+  }
+
+  @media (min-width: 900px) {
+    .local {
+      padding-block: var(--e9);
+    }
+
+    .local__grade {
+      grid-template-columns: minmax(0, 1fr) 360px;
+      align-items: start;
+      gap: var(--e8);
+    }
+
+    .local__acoes {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: var(--e5);
+    }
+  }
+</style>

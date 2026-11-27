@@ -5,8 +5,12 @@
  * Desktop: índice fixo à esquerda + itens em duas colunas.
  * Preços vêm do cardápio confirmado pela padaria; `preco: null` ainda vira
  * "Preço no balcão" como rede de segurança.
+ *
+ * Cada categoria fecha com um CTA de WhatsApp que já abre a conversa com o
+ * nome da categoria na mensagem — o cliente não precisa se explicar.
  */
 import menu from '../content/menu.json';
+import { whatsappHref } from '../lib/negocio';
 ---
 
 <section class="cardapio" id="cardapio" aria-labelledby="cardapio-titulo">
@@ -67,6 +71,21 @@ import menu from '../content/menu.json';
                   </li>
                 ))}
               </ul>
+
+              <p class="categoria__cta">
+                <a
+                  class="categoria__cta-link"
+                  href={whatsappHref(
+                    `Olá! Vim pelo site e quero pedir do cardápio: ${categoria.nome}.`,
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Pedir ${categoria.nome} pelo WhatsApp (abre em nova aba)`}
+                >
+                  Pedir pelo WhatsApp
+                  <span aria-hidden="true">→</span>
+                </a>
+              </p>
             </section>
           ))
         }
@@ -232,6 +251,27 @@ import menu from '../content/menu.json';
 
   .item__preco--ausente {
     font-style: italic;
+  }
+
+  .categoria__cta {
+    margin-top: var(--e4);
+  }
+
+  .categoria__cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--e2);
+    min-height: 40px;
+    font-size: var(--t-sm);
+    font-weight: 600;
+    color: var(--crosta);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+  }
+
+  .categoria__cta-link:hover {
+    text-decoration-thickness: 2px;
   }
 
   .cardapio__nota {

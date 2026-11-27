@@ -1,0 +1,157 @@
+---
+/**
+ * Prova social.
+ *
+ * A nota e o número de avaliações são os que já existiam no material verificado
+ * (Google 4,5 ★ / 50 avaliações). Citações só aparecem quando `site.avaliacoes`
+ * for preenchido com texto real e autorizado — o campo é uma lista de
+ * `{ autor: string, texto: string }` e fica vazio até a padaria enviar as suas.
+ *
+ * Reaproveita `google.url` para o link "Ver no Google"; enquanto o endereço do
+ * perfil não for confirmado, o link não é renderizado (nada de URL inventada).
+ */
+import site from '../content/site.json';
+
+const { google } = site;
+const avaliacoes = site.avaliacoes as { autor: string; texto: string }[];
+---
+
+{
+  google.nota && (
+    <section class="avaliacoes" id="avaliacoes" aria-labelledby="avaliacoes-titulo">
+      <div class="container avaliacoes__interno">
+        <p class="avaliacoes__nota">
+          {google.nota}
+          <span class="avaliacoes__estrela" aria-hidden="true">
+            ★
+          </span>
+        </p>
+
+        <div class="avaliacoes__conteudo">
+          <p class="eyebrow">No Google</p>
+          <h2 id="avaliacoes-titulo" class="avaliacoes__titulo">
+            {google.avaliacoes} avaliações de quem passa por aqui
+          </h2>
+
+          {avaliacoes.length > 0 ? (
+            <ul class="avaliacoes__lista">
+              {avaliacoes.map((item) => (
+                <li class="avaliacoes__item">
+                  <blockquote class="avaliacoes__citacao">
+                    <p>“{item.texto}”</p>
+                    <cite>{item.autor}</cite>
+                  </blockquote>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="avaliacoes__texto">
+              A nota é do perfil da padaria no Google, com o total de avaliações de lá.
+              {google.url && (
+                <>
+                  {' '}
+                  <a class="avaliacoes__link" href={google.url} target="_blank" rel="noopener noreferrer">
+                    Ver no Google
+                    <span class="sr-only"> (abre em nova aba)</span>
+                  </a>
+                </>
+              )}
+            </p>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .avaliacoes {
+    padding-block: var(--e7);
+    background-color: var(--farinha);
+    border-top: 1px solid var(--borda);
+    scroll-margin-top: 72px;
+  }
+
+  .avaliacoes__interno {
+    display: grid;
+    gap: var(--e5);
+  }
+
+  .avaliacoes__nota {
+    display: flex;
+    align-items: baseline;
+    gap: var(--e1);
+    font-family: var(--fonte-display);
+    font-size: clamp(3rem, 2rem + 4vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--crosta);
+  }
+
+  .avaliacoes__estrela {
+    font-size: 0.5em;
+    color: var(--manjericao);
+  }
+
+  .avaliacoes__titulo {
+    margin-top: var(--e2);
+    font-size: var(--t-h3);
+  }
+
+  .avaliacoes__texto {
+    margin-top: var(--e3);
+    max-width: var(--medida);
+    font-size: var(--t-sm);
+    line-height: var(--lh-sm);
+    color: var(--tinta-suave);
+  }
+
+  .avaliacoes__link {
+    color: var(--crosta);
+    text-underline-offset: 4px;
+  }
+
+  .avaliacoes__lista {
+    display: grid;
+    gap: var(--e4);
+    margin-top: var(--e4);
+  }
+
+  .avaliacoes__item {
+    padding-top: var(--e4);
+    border-top: 1px solid var(--borda);
+  }
+
+  .avaliacoes__citacao p {
+    font-family: var(--fonte-display);
+    font-size: var(--t-lg);
+    line-height: 1.4;
+  }
+
+  .avaliacoes__citacao cite {
+    display: block;
+    margin-top: var(--e2);
+    font-family: var(--fonte-texto);
+    font-size: var(--t-xs);
+    font-style: normal;
+    color: var(--tinta-suave);
+  }
+
+  @media (min-width: 900px) {
+    .avaliacoes {
+      padding-block: var(--e8);
+    }
+
+    .avaliacoes__interno {
+      grid-template-columns: 200px minmax(0, 1fr);
+      align-items: start;
+      gap: var(--e7);
+    }
+
+    .avaliacoes__lista {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--e5) var(--e6);
+    }
+  }
+</style>

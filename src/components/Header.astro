@@ -1,15 +1,15 @@
 ---
 /**
- * Header — logo (placeholder), navegação e CTA.
+ * Header — logo (placeholder), navegação (todas as seções já existem) e CTA.
  * Mobile: menu nativo em <details>, sem JavaScript.
  */
 import BotaoWhatsApp from './BotaoWhatsApp.astro';
 
 const links = [
   { rotulo: 'Cardápio', href: '#cardapio' },
-  { rotulo: 'A casa', href: null },
-  { rotulo: 'Onde estamos', href: null },
-  { rotulo: 'Contato', href: null },
+  { rotulo: 'A casa', href: '#a-casa' },
+  { rotulo: 'Onde estamos', href: '#onde-estamos' },
+  { rotulo: 'Contato', href: '#contato' },
 ];
 ---
 
@@ -22,18 +22,11 @@ const links = [
 
     <nav class="nav" aria-label="Navegação principal">
       {
-        links.map((link) =>
-          link.href ? (
-            <a class="nav__link" href={link.href}>
-              {link.rotulo}
-            </a>
-          ) : (
-            <span class="nav__link nav__link--pendente" title="Seção prevista para a próxima etapa">
-              {link.rotulo}
-              <span class="sr-only"> (seção ainda não construída)</span>
-            </span>
-          ),
-        )
+        links.map((link) => (
+          <a class="nav__link" href={link.href}>
+            {link.rotulo}
+          </a>
+        ))
       }
     </nav>
 
@@ -52,18 +45,11 @@ const links = [
         </summary>
         <nav class="menu-mobile__painel" aria-label="Navegação principal (mobile)">
           {
-            links.map((link) =>
-              link.href ? (
-                <a class="menu-mobile__link" href={link.href}>
-                  {link.rotulo}
-                </a>
-              ) : (
-                <span class="menu-mobile__link menu-mobile__link--pendente">
-                  {link.rotulo}
-                  <span class="menu-mobile__tag">em breve</span>
-                </span>
-              ),
-            )
+            links.map((link) => (
+              <a class="menu-mobile__link" href={link.href}>
+                {link.rotulo}
+              </a>
+            ))
           }
         </nav>
       </details>
@@ -188,20 +174,6 @@ const links = [
     background-color: var(--farinha);
   }
 
-  .menu-mobile__link--pendente {
-    color: var(--tinta-suave);
-    font-weight: 500;
-    cursor: default;
-  }
-
-  .menu-mobile__tag {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--tinta-suave);
-  }
-
   @media (min-width: 900px) {
     .cabecalho__interno {
       min-height: 72px;
@@ -229,18 +201,6 @@ const links = [
       text-decoration: underline;
       text-decoration-thickness: 1px;
       text-underline-offset: 6px;
-    }
-
-    .nav__link--pendente {
-      color: var(--tinta-suave);
-      font-weight: 500;
-      text-decoration: underline dotted var(--borda-forte);
-      text-underline-offset: 6px;
-      cursor: default;
-    }
-
-    .nav__link--pendente:hover {
-      text-decoration: underline dotted var(--borda-forte);
     }
 
     .cabecalho__cta {

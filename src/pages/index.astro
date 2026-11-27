@@ -4,16 +4,34 @@ import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Menu from '../components/Menu.astro';
 import CrustDivider from '../components/CrustDivider.astro';
+import ACasa from '../components/ACasa.astro';
+import Depoimentos from '../components/Depoimentos.astro';
+import Localizacao from '../components/Localizacao.astro';
+import Rodape from '../components/Rodape.astro';
 import NotasPrototipo from '../components/NotasPrototipo.astro';
+import site from '../content/site.json';
+import { dadosEstruturados } from '../lib/negocio';
+import { origemDoSite } from '../lib/siteUrl';
+
+const jsonLd = dadosEstruturados(origemDoSite());
 ---
 
-<Base titulo="Panificadora Oliveira — protótipo (Etapa 1)">
+<Base
+  titulo={site.seo.titulo}
+  descricao={site.seo.descricao}
+  imagem={site.seo.imagem}
+  dadosEstruturados={jsonLd}
+>
   <Header />
   <main id="conteudo">
     <Hero />
     <CrustDivider cor="var(--pedra)" altura={36} />
     <Menu />
     <CrustDivider cor="var(--pedra)" altura={36} />
+    <ACasa />
+    <Depoimentos />
+    <Localizacao />
     <NotasPrototipo />
   </main>
+  <Rodape />
 </Base>

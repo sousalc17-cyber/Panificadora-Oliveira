@@ -1,0 +1,121 @@
+---
+/**
+ * Apresentação da casa + diferenciais.
+ * Todo texto sai de fatos confirmados (endereço, horário, Google, serviços).
+ */
+import { horarioLongo } from '../lib/negocio';
+import site from '../content/site.json';
+
+const diferenciais = [
+  { titulo: 'Todos os dias', texto: `${horarioLongo}.` },
+  { titulo: 'Do seu jeito', texto: 'Consumo no local, para levar ou delivery.' },
+  { titulo: 'Estacionamento gratuito', texto: 'Sem custo para estacionar.' },
+  {
+    titulo: `${site.google.nota} estrelas no Google`,
+    texto: `${site.google.avaliacoes} avaliações de quem já passou por aqui.`,
+  },
+];
+---
+
+<section class="casa" id="a-casa" aria-labelledby="casa-titulo">
+  <div class="container">
+    <div class="casa__texto">
+      <p class="eyebrow">A casa</p>
+      <h2 id="casa-titulo">Um lugar pra chamar de seu</h2>
+      <p class="casa__paragrafo">
+        A Panificadora Oliveira fica na Av. Santos Dumont, 521, na Manguinha, em Floriano. O dia
+        começa às 6h e vai até as 22h: pão, café da manhã, cuscuz, tapioca, confeitaria e
+        conveniência no mesmo lugar, todos os dias.
+      </p>
+      <p class="casa__paragrafo">
+        Dá para comer aqui, levar para casa ou pedir delivery — o estacionamento é gratuito.
+      </p>
+    </div>
+
+    <ul class="casa__diferenciais">
+      {
+        diferenciais.map((item) => (
+          <li class="diferencial">
+            <h3 class="diferencial__titulo">{item.titulo}</h3>
+            <p class="diferencial__texto">{item.texto}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .casa {
+    padding-block: var(--e8);
+    background-color: var(--pedra);
+    scroll-margin-top: 72px;
+  }
+
+  .casa__texto {
+    max-width: var(--medida);
+  }
+
+  .casa__paragrafo {
+    margin-top: var(--e4);
+    font-size: var(--t-base);
+    line-height: var(--lh-base);
+    color: var(--crosta);
+  }
+
+  .casa__paragrafo + .casa__paragrafo {
+    margin-top: var(--e3);
+    color: var(--tinta-suave);
+  }
+
+  .casa__diferenciais {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--e5) var(--e6);
+    margin-top: var(--e7);
+    padding-top: var(--e6);
+    border-top: 1px solid var(--borda-forte);
+  }
+
+  .diferencial__titulo {
+    font-family: var(--fonte-texto);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1.4;
+    color: var(--crosta);
+  }
+
+  .diferencial__texto {
+    margin-top: var(--e1);
+    font-size: var(--t-xs);
+    line-height: 1.5;
+    color: var(--tinta-suave);
+    text-wrap: pretty;
+  }
+
+  @media (min-width: 900px) {
+    .casa {
+      padding-block: var(--e9);
+    }
+
+    .casa > .container {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
+      gap: var(--e8);
+    }
+
+    .casa__diferenciais {
+      margin-top: var(--e2);
+      padding-top: 0;
+      border-top: 0;
+      gap: var(--e6) var(--e7);
+    }
+
+    .diferencial {
+      padding-top: var(--e4);
+      border-top: 1px solid var(--borda-forte);
+    }
+  }
+</style>

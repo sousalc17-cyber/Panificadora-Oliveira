@@ -1,0 +1,137 @@
+---
+/**
+ * Rodapé com NAP completo (nome, endereço, telefone) — o mesmo dado do
+ * Schema.org, para consistência de SEO local.
+ */
+import site from '../content/site.json';
+import { enderecoLinha, enderecoCidade, horarioLongo, mapaHref } from '../lib/negocio';
+
+const ano = new Date().getFullYear();
+---
+
+<footer class="rodape" id="contato">
+  <div class="container rodape__grade">
+    <div class="rodape__marca">
+      <p class="rodape__nome">{site.nome}</p>
+      <p class="rodape__slogan">Um lugar pra chamar de seu!</p>
+      <p class="rodape__linha">
+        {enderecoLinha}<br />{enderecoCidade}
+      </p>
+    </div>
+
+    <div class="rodape__coluna">
+      <h2 class="rodape__titulo">Horário</h2>
+      <p class="rodape__linha">{horarioLongo}</p>
+    </div>
+
+    <div class="rodape__coluna">
+      <h2 class="rodape__titulo">Contato</h2>
+      <ul class="rodape__lista">
+        <li>
+          <a href={site.whatsapp.href} target="_blank" rel="noopener noreferrer">
+            WhatsApp {site.whatsapp.numeroExibido}
+            <span class="sr-only"> (abre em nova aba)</span>
+          </a>
+        </li>
+        <li>
+          <a href={site.instagram.url} target="_blank" rel="noopener noreferrer">
+            Instagram {site.instagram.usuario}
+            <span class="sr-only"> (abre em nova aba)</span>
+          </a>
+        </li>
+        <li><a href={mapaHref} target="_blank" rel="noopener noreferrer">Como chegar</a></li>
+      </ul>
+    </div>
+
+    <div class="rodape__coluna">
+      <h2 class="rodape__titulo">Navegar</h2>
+      <ul class="rodape__lista">
+        <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#a-casa">A casa</a></li>
+        <li><a href="#onde-estamos">Onde estamos</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container rodape__base">
+    <p>© {ano} {site.nome} · Floriano–PI</p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    padding-block: var(--e8) var(--e5);
+    background-color: var(--crosta);
+    color: var(--miolo);
+  }
+
+  .rodape__grade {
+    display: grid;
+    gap: var(--e6);
+  }
+
+  .rodape__nome {
+    font-family: var(--fonte-display);
+    font-size: var(--t-h3);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .rodape__slogan {
+    margin-top: var(--e1);
+    font-size: var(--t-sm);
+    color: var(--acafrao-claro);
+  }
+
+  .rodape__linha {
+    margin-top: var(--e3);
+    font-size: var(--t-sm);
+    line-height: 1.6;
+    color: rgb(255 251 243 / 0.82);
+  }
+
+  .rodape__titulo {
+    font-family: var(--fonte-texto);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgb(255 251 243 / 0.62);
+  }
+
+  .rodape__lista {
+    display: grid;
+    gap: var(--e1);
+    margin-top: var(--e3);
+  }
+
+  .rodape__lista a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    font-size: var(--t-sm);
+    color: var(--miolo);
+    text-decoration: underline;
+    text-decoration-color: rgb(255 251 243 / 0.32);
+    text-underline-offset: 4px;
+  }
+
+  .rodape__lista a:hover {
+    text-decoration-color: var(--miolo);
+  }
+
+  .rodape__base {
+    margin-top: var(--e7);
+    padding-top: var(--e4);
+    border-top: 1px solid rgb(255 251 243 / 0.16);
+    font-size: var(--t-xs);
+    color: rgb(255 251 243 / 0.66);
+  }
+
+  @media (min-width: 900px) {
+    .rodape__grade {
+      grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+      gap: var(--e7);
+    }
+  }
+</style>

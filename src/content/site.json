@@ -1,27 +1,51 @@
 {
   "nome": "Panificadora Oliveira",
   "eyebrow": "Padaria • Confeitaria • Conveniência",
+  "seo": {
+    "titulo": "Padaria em Floriano, PI — Panificadora Oliveira",
+    "descricao": "Cuscuz, tapioca, pão quentinho e café da manhã na Av. Santos Dumont, 521 — Manguinha, Floriano–PI. Todos os dias, das 6h às 22h. Peça pelo WhatsApp.",
+    "imagem": "/og-image.png"
+  },
   "hero": {
     "titulo": "Um lugar pra chamar de seu — desde as 6 da manhã.",
     "lede": "Pão quentinho, café da manhã e confeitaria na Av. Santos Dumont, 521 — Manguinha, Floriano. De segunda a domingo."
   },
   "whatsapp": {
     "numeroExibido": "+55 89 99402-6283",
+    "e164": "+5589994026283",
     "href": "https://wa.me/5589994026283",
     "confirmado": true
   },
   "horario": {
     "dias": "Segunda a domingo",
     "abre": "06:00",
-    "fecha": "22:30"
+    "fecha": "22:00",
+    "fuso": "America/Fortaleza"
   },
+  "endereco": {
+    "rua": "Av. Santos Dumont",
+    "numero": "521",
+    "bairro": "Manguinha",
+    "cidade": "Floriano",
+    "uf": "PI"
+  },
+  "instagram": {
+    "usuario": "@panificadoraoliveira",
+    "url": "https://www.instagram.com/panificadoraoliveira/"
+  },
+  "google": {
+    "nota": "4,5",
+    "avaliacoes": 50,
+    "url": null
+  },
+  "avaliacoes": [],
   "provas": [
     {
       "texto": "4,5★ no Google · 50 avaliações",
       "verificavel": true
     },
     {
-      "texto": "Seg a dom, das 6h às 22h30",
+      "texto": "Seg a dom, das 6h às 22h",
       "verificavel": true
     },
     {
@@ -51,6 +75,12 @@
       "rotulo": "Fotos de produto (pães, vitrine, cuscuz, tapioca)",
       "onde": "cardápio e galeria",
       "bloqueia": "apoio visual"
+    },
+    {
+      "id": "avaliacoes",
+      "rotulo": "Avaliações reais do Google, com autorização dos autores",
+      "onde": "seção de avaliações (hoje só a nota)",
+      "bloqueia": "prova social em texto"
     }
   ]
 }
