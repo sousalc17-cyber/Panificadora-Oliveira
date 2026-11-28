@@ -7,11 +7,13 @@
  * na coluna do desktop). Enquanto o arquivo não estiver em `public/images`, a
  * faixa mantém a altura e a composição, com o fundo em degradê e um rótulo
  * discreto do que entra ali — sem imagem quebrada e sem mudança de layout.
+ *
+ * Ao lado da fachada o CTA leva ao mapa, não ao WhatsApp: quem chegou até a
+ * foto do prédio está decidindo como ir até lá.
  */
-import BotaoWhatsApp from './BotaoWhatsApp.astro';
 import { encontrarFoto, slot } from '../lib/fotos';
 import site from '../content/site.json';
-import { enderecoCompleto, horaCurta } from '../lib/negocio';
+import { enderecoCompleto, horaCurta, mapaHref } from '../lib/negocio';
 
 const { horario } = site;
 const foto = slot('fachada-panificadora-oliveira.webp');
@@ -41,7 +43,10 @@ const temFundo = Boolean(arquivoFachada);
     </h2>
     <p class="faixa__texto">Todos os dias, na {enderecoCompleto}.</p>
     <p class="faixa__acao">
-      <BotaoWhatsApp rotulo="Pedir pelo WhatsApp" variante="primario" />
+      <a class="botao botao--primario" href={mapaHref} target="_blank" rel="noopener noreferrer">
+        Abrir no Google Maps
+        <span class="sr-only"> (abre em nova aba)</span>
+      </a>
     </p>
   </div>
 
