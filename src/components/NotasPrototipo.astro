@@ -56,9 +56,9 @@ const pendencias = [
           {aplicados.map((linha) => <li>{linha}</li>)}
         </ul>
         <p class="notas__texto">
-          Nenhuma imagem gerada ficou no site. Cada seção guarda a proporção da foto real e mostra
-          a moldura com o nome do arquivo enquanto ele não chega — {fotosNoAr} de
-          {' '}{slots.length} fotos já estão em <code>public/images</code>.
+          Nenhuma imagem gerada ficou no site. Cada seção guarda a proporção da foto real e mostra a
+          moldura com o nome do arquivo enquanto ele não chega: {fotosNoAr} de {slots.length} fotos
+          estão em <code>public/images</code> (as marcadas como “aguardando” ainda não chegaram).
         </p>
       </div>
 
@@ -243,6 +243,48 @@ const pendencias = [
   .notas__rodape a {
     color: var(--crosta);
     text-underline-offset: 4px;
+  }
+
+  /* No mobile a tabela de 4 colunas não cabe: cada linha vira um bloco. */
+  @media (max-width: 899px) {
+    .notas__tabela thead {
+      display: none;
+    }
+
+    .notas__tabela,
+    .notas__tabela tbody,
+    .notas__tabela tr,
+    .notas__tabela td {
+      display: block;
+      width: auto;
+    }
+
+    .notas__tabela tr {
+      padding-block: var(--e3);
+      border-bottom: 1px solid var(--borda);
+    }
+
+    .notas__tabela td {
+      padding: 0;
+      border: 0;
+    }
+
+    .notas__tabela td:first-child {
+      font-weight: 600;
+    }
+
+    .notas__tabela td:nth-child(2) {
+      font-size: var(--t-xs);
+      line-height: 1.45;
+      color: var(--tinta-suave);
+    }
+
+    .notas__tabela td:nth-child(3),
+    .notas__tabela td:nth-child(4) {
+      display: inline-block;
+      margin-top: var(--e2);
+      margin-right: var(--e2);
+    }
   }
 
   @media (min-width: 900px) {
