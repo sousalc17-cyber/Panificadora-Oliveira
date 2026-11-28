@@ -40,7 +40,8 @@ const SLOTS = [
     proporcao: '4:5',
     largura: 960,
     altura: 1200,
-    chaves: ['hero', 'carne', 'garfo', 'desfiada'],
+    posicao: 'centre',
+    chaves: ['hero', 'carne', 'garfo', 'desfiada', 'puxando'],
   },
   {
     base: 'pao-de-queijo-cafe',
@@ -48,6 +49,7 @@ const SLOTS = [
     proporcao: '4:5',
     largura: 960,
     altura: 1200,
+    posicao: 'centre',
     chaves: ['pao', 'queijo', 'cafe'],
   },
   {
@@ -56,6 +58,7 @@ const SLOTS = [
     proporcao: '3:2',
     largura: 1200,
     altura: 800,
+    posicao: 'centre',
     chaves: ['gratinado', 'prato', 'bolinho', 'cuscuz'],
   },
   {
@@ -64,6 +67,7 @@ const SLOTS = [
     proporcao: '16:9',
     largura: 1600,
     altura: 900,
+    posicao: 'centre',
     chaves: ['fachada', 'frente', 'entrada', 'predio', 'loja', 'noite'],
   },
 ];
@@ -135,7 +139,7 @@ async function converter(entrada, slot) {
     while (true) {
       const resultado = await sharp(entrada)
         .rotate() // respeita a orientação EXIF da câmera
-        .resize(largura, altura, { fit: 'cover', position: 'centre', kernel: 'lanczos3' })
+        .resize(largura, altura, { fit: 'cover', position: slot.posicao ?? 'centre', kernel: 'lanczos3' })
         .webp({ quality: qualidade, effort: 5 })
         .toBuffer({ resolveWithObject: true });
 
