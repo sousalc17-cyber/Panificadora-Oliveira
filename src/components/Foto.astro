@@ -1,0 +1,102 @@
+---
+/**
+ * Foto — mostra a fotografia real ou a moldura da proporção reservada.
+ *
+ * Se o arquivo estiver em `public/images`, renderiza a imagem com `width`,
+ * `height` e `aspect-ratio` (sem salto de layout). Se ainda não estiver,
+ * renderiza um bloco da mesma proporção com o rótulo do que vai entrar:
+ * nada quebrado, nada gerado.
+ */
+import { temFoto } from '../lib/fotos';
+
+interface Props {
+  arquivo: string;
+  proporcao: string;
+  largura: number;
+  altura: number;
+  alt: string;
+  rotulo: string;
+  loading?: 'eager' | 'lazy';
+  prioridade?: boolean;
+}
+
+const {
+  arquivo,
+  proporcao,
+  largura,
+  altura,
+  alt,
+  rotulo,
+  loading = 'lazy',
+  prioridade = false,
+} = Astro.props;
+
+const disponivel = temFoto(arquivo);
+---
+
+{
+  disponivel ? (
+    <img
+      class="foto"
+      src={`/images/${arquivo}`}
+      alt={alt}
+      width={largura}
+      height={altura}
+      loading={loading}
+      fetchpriority={prioridade ? 'high' : 'auto'}
+      decoding="async"
+      style={`aspect-ratio: ${proporcao};`}
+    />
+  ) : (
+    <div class="foto foto--reserva" style={`aspect-ratio: ${proporcao};`}>
+      <span class="foto__rotulo">
+        <span class="foto__pendente">Foto</span>
+        {rotulo}
+      </span>
+    </div>
+  )
+}
+
+<style>
+  .foto {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--r2);
+  }
+
+  /* Reserva: mesma proporção da foto, tom de pedra, sem tracejado de sistema. */
+  .foto--reserva {
+    display: grid;
+    place-items: center;
+    height: auto;
+    padding: var(--e4);
+    border: 1px solid var(--borda-forte);
+    background-color: var(--pedra);
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgb(42 27 18 / 0.045) 0 2px,
+      transparent 2px 9px
+    );
+    color: var(--tinta-suave);
+    text-align: center;
+  }
+
+  .foto__rotulo {
+    display: grid;
+    gap: var(--e1);
+    max-width: 20ch;
+    font-size: var(--t-xs);
+    line-height: 1.4;
+    font-weight: 600;
+  }
+
+  .foto__pendente {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--tinta-suave);
+    opacity: 0.75;
+  }
+</style>

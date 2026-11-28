@@ -1,0 +1,169 @@
+---
+/**
+ * Vitrine — pausa visual entre o cardápio e a faixa do horário.
+ *
+ * Duas fotografias reais da casa, cada uma na sua proporção, e um cartão de
+ * texto que fecha o mosaico no desktop (sem buraco e sem terceira foto
+ * improvisada). Enquanto os arquivos não chegam, o componente `Foto` desenha a
+ * moldura na proporção certa — nada de imagem gerada e nada quebrado.
+ */
+import Foto from './Foto.astro';
+import { slot } from '../lib/fotos';
+
+const fotoAlta = slot('pao-de-queijo-cafe.webp');
+const fotoLarga = slot('cuscuz-gratinado.webp');
+---
+
+<section class="vitrine" id="vitrine" aria-labelledby="vitrine-titulo">
+  <div class="container">
+    <header class="vitrine__cabecalho">
+      <p class="eyebrow">A vitrine</p>
+      <h2 id="vitrine-titulo" class="vitrine__titulo">
+        O que sai do forno e o que espera por você
+      </h2>
+    </header>
+
+    <div class="vitrine__grade">
+      <div class="vitrine__item vitrine__item--alta">
+        <figure class="vitrine__figura">
+          <Foto
+            arquivo={fotoAlta.arquivo}
+            proporcao={fotoAlta.proporcao}
+            largura={960}
+            altura={1200}
+            alt={fotoAlta.alt}
+            rotulo={`${fotoAlta.rotulo} · ${fotoAlta.formato}`}
+          />
+        </figure>
+      </div>
+
+      <div class="vitrine__item">
+        <figure class="vitrine__figura">
+          <Foto
+            arquivo={fotoLarga.arquivo}
+            proporcao={fotoLarga.proporcao}
+            largura={1200}
+            altura={800}
+            alt={fotoLarga.alt}
+            rotulo={`${fotoLarga.rotulo} · ${fotoLarga.formato}`}
+          />
+        </figure>
+      </div>
+
+      <div class="vitrine__item vitrine__item--texto">
+        <div class="vitrine__cartao">
+          <h3 class="vitrine__cartao-titulo">O café da manhã começa cedo</h3>
+          <p class="vitrine__cartao-texto">
+            Pão de queijo, café, cuscuz e tapioca todos os dias, a partir das 6h. Consumo no local,
+            para levar ou delivery.
+          </p>
+          <a class="vitrine__cartao-link" href="#cardapio">
+            Ver o cardápio
+            <span class="sr-only"> (volta para o início do cardápio)</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vitrine {
+    padding-block: var(--e8);
+    scroll-margin-top: 72px;
+  }
+
+  .vitrine__cabecalho {
+    max-width: 40ch;
+  }
+
+  .vitrine__titulo {
+    margin-top: var(--e3);
+  }
+
+  .vitrine__grade {
+    display: grid;
+    gap: var(--e4);
+    margin-top: var(--e6);
+  }
+
+  .vitrine__item {
+    min-width: 0;
+  }
+
+  .vitrine__figura {
+    margin: 0;
+    height: 100%;
+  }
+
+  .vitrine__figura :global(.foto) {
+    height: 100%;
+    box-shadow: var(--sombra);
+  }
+
+  .vitrine__cartao {
+    display: flex;
+    height: 100%;
+    min-height: 220px;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--e4);
+    padding: var(--e5);
+    background-color: var(--miolo);
+    border: 1px solid var(--borda);
+    border-radius: var(--r2);
+    box-shadow: var(--sombra);
+  }
+
+  .vitrine__cartao-titulo {
+    font-size: var(--t-h3);
+    max-width: 22ch;
+  }
+
+  .vitrine__cartao-texto {
+    max-width: 38ch;
+    font-size: var(--t-sm);
+    line-height: var(--lh-sm);
+    color: var(--tinta-suave);
+  }
+
+  .vitrine__cartao-link {
+    align-self: flex-start;
+    font-size: var(--t-sm);
+    font-weight: 600;
+    color: var(--crosta);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+  }
+
+  .vitrine__cartao-link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  @media (min-width: 900px) {
+    .vitrine {
+      padding-block: var(--e9);
+    }
+
+    .vitrine__grade {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1.4fr) minmax(0, 1fr);
+      aspect-ratio: 16 / 10;
+      gap: var(--e5);
+      margin-top: var(--e7);
+    }
+
+    .vitrine__item--alta {
+      grid-row: span 2;
+    }
+
+    .vitrine__cartao {
+      padding: var(--e4) var(--e5);
+    }
+
+    .vitrine__cartao-titulo {
+      font-size: var(--t-lg);
+    }
+  }
+</style>

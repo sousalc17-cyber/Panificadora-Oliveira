@@ -2,12 +2,16 @@
 /**
  * Hero — primeira dobra.
  * Todo texto vem de `site.json` e é rastreável a um fato verificado.
- * A imagem é placeholder até a padaria enviar a foto do forno.
+ * A imagem é ilustrativa (gerada na direção de arte da marca) até a padaria
+ * enviar a fotografia real do forno.
  */
 import site from '../content/site.json';
 import BotaoWhatsApp from './BotaoWhatsApp.astro';
 import ProvaFaixa from './ProvaFaixa.astro';
-import BlocoFoto from './BlocoFoto.astro';
+import Foto from './Foto.astro';
+import { slot } from '../lib/fotos';
+
+const fotoHero = slot('cuscuz-carne-de-sol.webp');
 ---
 
 <section class="hero" aria-labelledby="hero-titulo">
@@ -28,11 +32,18 @@ import BlocoFoto from './BlocoFoto.astro';
     </div>
 
     <div class="hero__midia">
-      <BlocoFoto
-        proporcao="4 / 5"
-        rotulo="[FOTO PENDENTE] Forno ou pão saindo"
-        detalhe="vertical 4:5 · mín. 1200 px de largura"
-      />
+      <figure class="hero__figura">
+        <Foto
+          arquivo={fotoHero.arquivo}
+          proporcao={fotoHero.proporcao}
+          largura={960}
+          altura={1200}
+          alt={fotoHero.alt}
+          rotulo={`Foto principal · ${fotoHero.formato}`}
+          loading="eager"
+          prioridade
+        />
+      </figure>
     </div>
   </div>
 </section>
@@ -83,6 +94,14 @@ import BlocoFoto from './BlocoFoto.astro';
 
   .hero__midia {
     order: 2;
+  }
+
+  .hero__figura {
+    margin: 0;
+  }
+
+  .hero__figura :global(.foto) {
+    box-shadow: var(--sombra);
   }
 
   @media (min-width: 900px) {

@@ -1,13 +1,13 @@
 {
   "nome": "Panificadora Oliveira",
-  "eyebrow": "Padaria • Confeitaria • Conveniência",
+  "eyebrow": "Padaria, confeitaria e conveniência",
   "seo": {
     "titulo": "Padaria em Floriano, PI — Panificadora Oliveira",
     "descricao": "Cuscuz, tapioca, pão quentinho e café da manhã na Av. Santos Dumont, 521 — Manguinha, Floriano–PI. Todos os dias, das 6h às 22h. Peça pelo WhatsApp.",
     "imagem": "/og-image.png"
   },
   "hero": {
-    "titulo": "Um lugar pra chamar de seu — desde as 6 da manhã.",
+    "titulo": "Um lugar pra chamar de seu.",
     "lede": "Pão quentinho, café da manhã e confeitaria na Av. Santos Dumont, 521 — Manguinha, Floriano. De segunda a domingo."
   },
   "whatsapp": {
@@ -37,7 +37,13 @@
     "nota": "4,5",
     "avaliacoes": 50,
     "url": null,
-    "distribuicao": { "5": 100, "4": 55, "3": 28, "2": 2, "1": 2 },
+    "distribuicao": {
+      "1": 2,
+      "2": 2,
+      "3": 28,
+      "4": 55,
+      "5": 100
+    },
     "distribuicaoConfirmada": false
   },
   "avaliacoes": [],
@@ -57,32 +63,6 @@
     {
       "texto": "Estacionamento gratuito",
       "verificavel": true
-    }
-  ],
-  "placeholders": [
-    {
-      "id": "logo",
-      "rotulo": "Logotipo em vetor",
-      "onde": "header, favicon",
-      "bloqueia": "identidade definitiva"
-    },
-    {
-      "id": "foto-forno",
-      "rotulo": "Foto do forno ou do pão saindo (4:5)",
-      "onde": "hero",
-      "bloqueia": "imagem principal"
-    },
-    {
-      "id": "fotos-produto",
-      "rotulo": "Fotos de produto (pães, vitrine, cuscuz, tapioca)",
-      "onde": "cardápio e galeria",
-      "bloqueia": "apoio visual"
-    },
-    {
-      "id": "avaliacoes",
-      "rotulo": "Avaliações reais do Google, com autorização dos autores",
-      "onde": "seção de avaliações (hoje só a nota)",
-      "bloqueia": "prova social em texto"
     }
   ]
 }

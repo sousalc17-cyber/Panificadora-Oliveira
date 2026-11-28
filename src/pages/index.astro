@@ -4,6 +4,8 @@ import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Menu from '../components/Menu.astro';
 import CrustDivider from '../components/CrustDivider.astro';
+import Vitrine from '../components/Vitrine.astro';
+import Faixa from '../components/Faixa.astro';
 import ACasa from '../components/ACasa.astro';
 import Depoimentos from '../components/Depoimentos.astro';
 import Localizacao from '../components/Localizacao.astro';
@@ -28,6 +30,8 @@ const jsonLd = dadosEstruturados(origemDoSite());
     <CrustDivider cor="var(--pedra)" altura={36} />
     <Menu />
     <CrustDivider cor="var(--pedra)" altura={36} />
+    <Vitrine />
+    <Faixa />
     <ACasa />
     <Depoimentos />
     <Localizacao />
