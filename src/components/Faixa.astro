@@ -9,21 +9,22 @@
  * discreto do que entra ali — sem imagem quebrada e sem mudança de layout.
  */
 import BotaoWhatsApp from './BotaoWhatsApp.astro';
-import { slot, temFoto } from '../lib/fotos';
+import { encontrarFoto, slot } from '../lib/fotos';
 import site from '../content/site.json';
 import { enderecoCompleto, horaCurta } from '../lib/negocio';
 
 const { horario } = site;
 const foto = slot('fachada-panificadora-oliveira.webp');
-const temFundo = temFoto(foto.arquivo);
+const arquivoFachada = encontrarFoto(foto.arquivo);
+const temFundo = Boolean(arquivoFachada);
 ---
 
 <section class="faixa" class:list={[{ 'faixa--sem-foto': !temFundo }]} aria-labelledby="faixa-titulo">
   {
-    temFundo && (
+    arquivoFachada && (
       <div class="faixa__fundo">
         <img
-          src={`/images/${foto.arquivo}`}
+          src={`/images/${arquivoFachada}`}
           alt=""
           width="1600"
           height="900"

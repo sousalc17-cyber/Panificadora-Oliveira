@@ -63,13 +63,35 @@ export const slots: SlotFoto[] = [
   },
 ];
 
-/** O arquivo está em `public/images`? Lido do disco a cada build/render. */
-export function temFoto(arquivo: string): boolean {
+/** Extensões que o componente `Foto` aceita, em ordem de preferência. */
+const EXTENSOES = ['.webp', '.jpg', '.jpeg', '.png'];
+
+/**
+ * Nome real do arquivo do slot, com a extensão que estiver na pasta.
+ * `cuscuz-gratinado` encontra `cuscuz-gratinado.webp`, `.jpg` ou `.png`.
+ * Devolve `null` quando não existe nenhum — o slot fica reservado.
+ */
+export function encontrarFoto(arquivo: string): string | null {
+  const base = arquivo.replace(/\.[^.]+$/, '');
+
+  let nomes: string[];
   try {
-    return readdirSync(DIRETORIO).includes(arquivo);
+    nomes = readdirSync(DIRETORIO);
   } catch {
-    return false;
+    return null;
   }
+
+  for (const extensao of EXTENSOES) {
+    const candidato = `${base}${extensao}`;
+    if (nomes.includes(candidato)) return candidato;
+  }
+
+  return null;
+}
+
+/** O slot já tem foto em `public/images`? */
+export function temFoto(arquivo: string): boolean {
+  return encontrarFoto(arquivo) !== null;
 }
 
 /** Slot pelo nome do arquivo, para não repetir strings nos componentes. */

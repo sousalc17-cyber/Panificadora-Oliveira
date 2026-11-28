@@ -7,7 +7,7 @@
  * renderiza um bloco da mesma proporção com o rótulo do que vai entrar:
  * nada quebrado, nada gerado.
  */
-import { temFoto } from '../lib/fotos';
+import { encontrarFoto } from '../lib/fotos';
 
 interface Props {
   arquivo: string;
@@ -31,14 +31,15 @@ const {
   prioridade = false,
 } = Astro.props;
 
-const disponivel = temFoto(arquivo);
+// Aceita .webp, .jpg, .jpeg ou .png — o nome do arquivo pode variar, o slot não.
+const arquivoReal = encontrarFoto(arquivo);
 ---
 
 {
-  disponivel ? (
+  arquivoReal ? (
     <img
       class="foto"
-      src={`/images/${arquivo}`}
+      src={`/images/${arquivoReal}`}
       alt={alt}
       width={largura}
       height={altura}
