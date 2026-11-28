@@ -9,4 +9,7 @@ dist/
 .logs/
 
 # Originais das fotos: pesados e só servem de entrada para `npm run fotos`.
-public/images/originais/
+# A pasta existe no repositório (para o upload pelo GitHub), mas o conteúdo não é
+# versionado.
+public/images/originais/*
+!public/images/originais/.gitkeep
