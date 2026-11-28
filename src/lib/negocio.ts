@@ -7,21 +7,50 @@
  */
 import site from '../content/site.json';
 
-const { endereco, horario, whatsapp, instagram } = site;
+const { endereco, filial, horario, whatsapp, instagram } = site;
 
-export const enderecoLinha = `${endereco.rua}, ${endereco.numero} — ${endereco.bairro}`;
-export const enderecoCidade = `${endereco.cidade}–${endereco.uf}`;
-export const enderecoCompleto = `${enderecoLinha}, ${enderecoCidade}`;
+type Endereco = typeof endereco;
 
-const consultaMapa = encodeURIComponent(
-  `${endereco.rua}, ${endereco.numero} - ${endereco.bairro}, ${endereco.cidade} - ${endereco.uf}`,
-);
+const linhaDe = (e: Endereco) => `${e.rua}, ${e.numero} — ${e.bairro}`;
+const cidadeDe = (e: Endereco) => `${e.cidade}–${e.uf}`;
+const consultaDe = (e: Endereco) =>
+  encodeURIComponent(`${e.rua}, ${e.numero} - ${e.bairro}, ${e.cidade} - ${e.uf}`);
 
 /** Busca pelo endereço no Google Maps (não depende de Place ID). */
-export const mapaHref = `https://www.google.com/maps/search/?api=1&query=${consultaMapa}`;
+const mapaDe = (e: Endereco) => `https://www.google.com/maps/search/?api=1&query=${consultaDe(e)}`;
 
-/** Rota até a padaria a partir da localização de quem abre o link. */
-export const rotaHref = `https://www.google.com/maps/dir/?api=1&destination=${consultaMapa}`;
+/** Rota até o endereço a partir da localização de quem abre o link. */
+const rotaDe = (e: Endereco) => `https://www.google.com/maps/dir/?api=1&destination=${consultaDe(e)}`;
+
+export const enderecoLinha = linhaDe(endereco);
+export const enderecoCidade = cidadeDe(endereco);
+export const enderecoCompleto = `${enderecoLinha}, ${enderecoCidade}`;
+
+export const mapaHref = mapaDe(endereco);
+export const rotaHref = rotaDe(endereco);
+
+/**
+ * As duas unidades, Matriz e Filial, com o endereço pronto para a tela e os
+ * links de mapa já montados a partir do mesmo endereço de `site.json`.
+ */
+export const unidades = [
+  {
+    rotulo: 'Matriz',
+    bairro: endereco.bairro,
+    linha: enderecoLinha,
+    cidade: enderecoCidade,
+    mapaHref,
+    rotaHref,
+  },
+  {
+    rotulo: 'Filial',
+    bairro: filial.bairro,
+    linha: linhaDe(filial),
+    cidade: cidadeDe(filial),
+    mapaHref: mapaDe(filial),
+    rotaHref: rotaDe(filial),
+  },
+];
 
 /** "06:00" → "6h"; "22:00" → "22h"; "22:30" → "22h30". */
 export function horaCurta(hhmm: string): string {

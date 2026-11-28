@@ -2,20 +2,14 @@
 /**
  * Localização + horário.
  *
- * O endereço e o horário vêm de `site.json`. O selo "aberto agora" é calculado
- * no navegador, no fuso da padaria, a partir dos mesmos dados — sem serviço
- * externo e sem depender de relógio do servidor. Sem JavaScript, o selo não
- * aparece e a tabela de horário continua legível.
+ * Os dois endereços (Matriz e Filial) e o horário vêm de `site.json`; cada
+ * unidade tem seus próprios links de mapa, montados do mesmo endereço. O selo
+ * "aberto agora" é calculado no navegador, no fuso da padaria, a partir dos
+ * mesmos dados — sem serviço externo e sem depender do relógio do servidor. Sem
+ * JavaScript, o selo não aparece e a tabela de horário continua legível.
  */
 import site from '../content/site.json';
-import {
-  enderecoLinha,
-  enderecoCidade,
-  mapaHref,
-  rotaHref,
-  horaCurta,
-  horarioLongo,
-} from '../lib/negocio';
+import { unidades, horaCurta, horarioLongo } from '../lib/negocio';
 
 const { horario } = site;
 ---
@@ -24,23 +18,46 @@ const { horario } = site;
   <div class="container local__grade">
     <div class="local__texto">
       <p class="eyebrow">Onde estamos</p>
-      <h2 id="local-titulo" class="local__titulo">Na Manguinha, na Santos Dumont</h2>
+      <h2 id="local-titulo" class="local__titulo">Duas unidades em Floriano</h2>
 
-      <address class="local__endereco">
-        <span>{enderecoLinha}</span>
-        <span>{enderecoCidade}</span>
-      </address>
+      <ul class="local__unidades">
+        {
+          unidades.map((unidade) => (
+            <li class="local__unidade">
+              <p class="local__unidade-rotulo">
+                <span class="local__unidade-selo">{unidade.rotulo}</span>
+                {unidade.bairro}
+              </p>
 
-      <div class="local__acoes">
-        <a class="botao botao--primario" href={mapaHref} target="_blank" rel="noopener noreferrer">
-          Abrir no Google Maps
-          <span class="sr-only"> (abre em nova aba)</span>
-        </a>
-        <a class="botao botao--fantasma" href={rotaHref} target="_blank" rel="noopener noreferrer">
-          Traçar rota
-          <span class="sr-only"> (abre em nova aba)</span>
-        </a>
-      </div>
+              <address class="local__endereco">
+                <span>{unidade.linha}</span>
+                <span>{unidade.cidade}</span>
+              </address>
+
+              <div class="local__acoes">
+                <a
+                  class="botao botao--primario"
+                  href={unidade.mapaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Abrir no Google Maps
+                  <span class="sr-only"> — {unidade.rotulo} (abre em nova aba)</span>
+                </a>
+                <a
+                  class="botao botao--fantasma"
+                  href={unidade.rotaHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Traçar rota
+                  <span class="sr-only"> até a {unidade.rotulo} (abre em nova aba)</span>
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
     </div>
 
     <div class="local__horario">
@@ -116,10 +133,43 @@ const { horario } = site;
     gap: var(--e7);
   }
 
+  .local__unidades {
+    display: grid;
+    gap: var(--e6);
+    margin-top: var(--e5);
+    padding: 0;
+    list-style: none;
+  }
+
+  .local__unidade + .local__unidade {
+    padding-top: var(--e6);
+    border-top: 1px solid var(--borda);
+  }
+
+  .local__unidade-rotulo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--e2);
+    font-family: var(--fonte-texto);
+    font-size: var(--t-xs);
+    font-weight: 600;
+    letter-spacing: var(--ls-eyebrow);
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+  }
+
+  .local__unidade-selo {
+    padding: 2px 8px;
+    border: 1px solid var(--borda-forte);
+    border-radius: var(--r-pill);
+    color: var(--crosta);
+  }
+
   .local__endereco {
     display: grid;
     gap: 2px;
-    margin-top: var(--e4);
+    margin-top: var(--e2);
     font-style: normal;
     font-size: var(--t-lg);
     line-height: 1.5;
@@ -131,7 +181,7 @@ const { horario } = site;
     flex-direction: column;
     align-items: stretch;
     gap: var(--e2);
-    margin-top: var(--e6);
+    margin-top: var(--e4);
   }
 
   .local__acoes > :global(.botao--fantasma) {
